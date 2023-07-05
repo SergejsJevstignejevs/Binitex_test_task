@@ -1,0 +1,29 @@
+.DatePickerPanel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 500px;
+}
+
+.DatePickerPanel > *{
+    display: flex !important;
+}
+
+.DatePickerPanel > p{
+    margin-right: 10px;
+}
+
+.DatePickerPanel > p:last-of-type{
+    margin-left: 10px;
+}
+
+.react-datepicker__input-container > input {
+    text-align: left;
+    width: 80px;
+}
+
+.react-datepicker__input-container > input:focus {
+    border-color: var(--blue-color);
+    outline: none;
+    border-radius: 5px;
+}
