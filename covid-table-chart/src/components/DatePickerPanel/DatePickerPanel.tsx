@@ -13,7 +13,7 @@ import {
 
 import { RootReducerState } from "../../store";
 
-function DatePickerPanel() {
+const DatePickerPanel: React.FC = () => {
     const dateState = useSelector<RootReducerState, DateState>((state) => state.dateReducer);
     const startDate = dateState.startDate;
     const endDate = dateState.endDate;

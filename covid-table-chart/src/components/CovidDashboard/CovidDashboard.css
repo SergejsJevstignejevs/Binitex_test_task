@@ -1,8 +1,10 @@
 .CovidDashboard {
     display: flex;
     flex-direction: row;
-    width: 650px;
-    height: 400px;
+    width: auto;
+    height: 500px;
     background-color: var(--blue-color);
     border: 1px solid black;
+    justify-content: center;
+    align-items: center;
 }

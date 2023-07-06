@@ -10,6 +10,6 @@
 .App > .MainContent {
   display: flex;
   flex-direction: column;
-  width: 650px;
-  height: 550px;
+  width: 800px;
+  height: 500px;
 }

@@ -1,0 +1,22 @@
+div[role="grid"]{
+    border-color: var(--grid-border-color);
+}
+
+div[role="columnheader"]{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    white-space: unset;
+    overflow: unset;
+    line-height: 1;
+    background-color: var(--beige-color);
+    border-color: var(--grid-border-color);
+}
+
+div[role="gridcell"]{
+    display: flex;
+    justify-content: center;
+    background-color: var(--complement-beige);
+    border-color: var(--grid-border-color);
+}

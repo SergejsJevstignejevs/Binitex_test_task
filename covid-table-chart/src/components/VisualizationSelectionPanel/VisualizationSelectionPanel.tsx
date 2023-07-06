@@ -9,7 +9,7 @@ import {
 
 import { RootReducerState } from "../../store";
 
-function VisualizationSelectionPanel() {
+const VisualizationSelectionPanel: React.FC = () => {
     const visualizationChoiseState = useSelector<RootReducerState, VisualizationChoiseState>((state) => state.dataVisualizationChoiseReducer);
     const visualizationChoise = visualizationChoiseState.visualizationChoise;
     const dispatch = useDispatch();
