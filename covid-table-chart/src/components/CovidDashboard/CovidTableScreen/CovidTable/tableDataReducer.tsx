@@ -14,8 +14,8 @@ interface TableDataAction {
 }
 
 // Action creators
-export const setTableData = (tableData: Array<TableCovidDataRepresentation>): TableDataAction => ({
-    type: "SET_TABLE_DATA",
+export const setCurrentTablePageData = (tableData: Array<TableCovidDataRepresentation>): TableDataAction => ({
+    type: "SET_CURRENT_TABLE_PAGE_DATA",
     payload: tableData,
 });
 
@@ -30,7 +30,7 @@ const initialState = {
 
 export function tableDataReducer(state: TableDataState = initialState, action: TableDataAction) {
     switch (action.type) {
-        case "SET_TABLE_DATA":{
+        case "SET_CURRENT_TABLE_PAGE_DATA":{
             return { ...state, tableData: [...action.payload] };
         }
         default:{

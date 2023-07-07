@@ -1,5 +1,5 @@
 div[role="grid"]{
-    border-color: var(--grid-border-color);
+    border-color: var(--bright-beige-border-color);
 }
 
 div[role="columnheader"]{
@@ -11,7 +11,7 @@ div[role="columnheader"]{
     overflow: unset;
     line-height: 1;
     background-color: var(--beige-color);
-    border-color: var(--grid-border-color);
+    border-color: var(--bright-beige-border-color);
 }
 
 div[role="gridcell"]{
@@ -23,5 +23,5 @@ div[role="gridcell"]{
     overflow: unset;
     line-height: 1;
     background-color: var(--complement-beige);
-    border-color: var(--grid-border-color);
+    border-color: var(--bright-beige-border-color);
 }

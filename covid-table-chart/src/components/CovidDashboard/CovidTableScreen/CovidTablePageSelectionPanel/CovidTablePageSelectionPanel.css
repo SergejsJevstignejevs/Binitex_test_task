@@ -1,0 +1,45 @@
+.CovidTablePageSelectionPanel{
+    display: flex;
+    flex-direction: row;
+    align-self: flex-end;
+    justify-content: center;
+    align-items: center;    
+    background-color: var(--beige-color);
+    margin-top: 10px;
+    width: 250px;
+    height: 35px;
+}
+
+.CovidTablePageSelectionPanel > ul{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.CovidTablePageSelectionPanel > ul > li{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    height: 100%;
+    flex-grow: 1;
+    border: 1px solid var(--bright-beige-border-color);
+}
+
+.CovidTablePageSelectionPanel > ul > li:not(:first-child) {
+    border-left: none;
+}
+
+.CovidTablePageSelectionPanel > ul > li > a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}

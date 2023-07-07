@@ -11,8 +11,9 @@ import "./CovidTable.css";
 import { RootReducerState } from "../../../../store";
 import { 
     TableDataState,
-    setTableData
+    setCurrentTablePageData
 } from "./tableDataReducer";
+import { PageSelectionState } from "../CovidTablePageSelectionPanel/pageSelectionReducer";
 
 const columns = [
     { key: 'country', name: 'Country', minWidth: 100 },
@@ -25,8 +26,11 @@ const columns = [
 ];
 
 const CovidTable: React.FC = () => {
-    const tableDataReducer = useSelector<RootReducerState, TableDataState>((state) => state.tableDataReducer);
-    const tableData = tableDataReducer.tableData;
+    const { tableData } = useSelector<RootReducerState, TableDataState>((state) => state.tableDataReducer);
+    const { 
+        currentPageNumber,
+        currentPageRowCount 
+    } = useSelector<RootReducerState, PageSelectionState>((state) => state.pageSelectionReducer);
     const dispatch = useDispatch();
     const { getDataByTablePageNumber, currentFilteredTableData } = useCovid19Service();
 
@@ -44,12 +48,16 @@ const CovidTable: React.FC = () => {
 
     useEffect(() => {
 
-        getDataByTablePageNumber(currentFilteredTableData, 9, 0).then(data => {
-            dispatch(setTableData(data));
+        getDataByTablePageNumber(
+            currentFilteredTableData, 
+            currentPageNumber, 
+            currentPageRowCount
+        ).then(data => {
+            dispatch(setCurrentTablePageData(data));
+            console.log("table changed");
         });
 
-    }, [currentFilteredTableData]);
-
+    }, [currentFilteredTableData, currentPageNumber, currentPageRowCount]);
     
     return (
         <DataGrid

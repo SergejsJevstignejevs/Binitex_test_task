@@ -25,11 +25,10 @@ export interface Covid19APIData{
 export default function useCovid19Service(){
 
     const { request, process, setProcess } = useHttp();
-    const dateState = useSelector<RootReducerState, DateState>((state) => state.dateReducer);
     const {
         startDate,
         endDate
-    } = dateState;
+    } = useSelector<RootReducerState, DateState>((state) => state.dateReducer);
     const [currentFilteredTableData, setCurrentFilteredTableData] = useState<TableCovidDataRepresentation[]>([]);
 
     const _apiBase = "https://opendata.ecdc.europa.eu/covid19/casedistribution/json/";
@@ -256,14 +255,13 @@ export default function useCovid19Service(){
 
     const getDataByTablePageNumber = async (
         currentTableData: TableCovidDataRepresentation[],
-        tablePageNumber: number, 
-        pageSize: number) => {
-
-        const startIndex = (tablePageNumber - 1) * pageSize;
-        const endIndex = startIndex + pageSize;
+        currentPageNumber: number, 
+        pageRowCount: number) => {
+        console.log(currentPageNumber);
+        const startIndex = (currentPageNumber - 1) * pageRowCount;
+        const endIndex = startIndex + pageRowCount;
       
-        return currentTableData.slice(0, tablePageNumber);
-
+        return currentTableData.slice(startIndex, endIndex);
     };
 
     return { 
