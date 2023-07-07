@@ -14,15 +14,29 @@ export const setEndDate = (endDate: Date): DateAction => ({
     payload: endDate,
 });
 
+export const setMinDate = (minDate: Date): DateAction => ({
+    type: "SET_MIN_DATE",
+    payload: minDate,
+});
+  
+export const setMaxDate = (maxDate: Date): DateAction => ({
+    type: "SET_MAX_DATE",
+    payload: maxDate,
+});
+
 //State definition
 export interface DateState {
-    startDate: Date,
-    endDate: Date
+    startDate: Date | null,
+    endDate: Date | null,
+    minDate: Date | null,
+    maxDate: Date | null
 };
 
 const initialState = {
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: null,
+    endDate: null,
+    minDate: null,
+    maxDate: null
 };
 
 export function dateReducer(state: DateState = initialState, action: DateAction) {
@@ -32,6 +46,12 @@ export function dateReducer(state: DateState = initialState, action: DateAction)
         }
         case "SET_END_DATE":{
             return { ...state, endDate: action.payload };
+        }
+        case "SET_MIN_DATE":{
+            return { ...state, minDate: action.payload };
+        }
+        case "SET_MAX_DATE":{
+            return { ...state, maxDate: action.payload };
         }
         default:{
             return state;

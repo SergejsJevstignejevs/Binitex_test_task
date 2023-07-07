@@ -28,27 +28,27 @@ const CovidTable: React.FC = () => {
     const tableDataReducer = useSelector<RootReducerState, TableDataState>((state) => state.tableDataReducer);
     const tableData = tableDataReducer.tableData;
     const dispatch = useDispatch();
-    const { getDataByAmount, getCountriesDataSeparately } = useCovid19Service();
+    const { getDataByTablePageNumber, currentFilteredTableData } = useCovid19Service();
 
     const rows = tableData.map(element => {
         return {
-            country: element.countriesAndTerritories, 
-            amountOfCases: element.cases,
-            amountOfDeaths: element.deaths,
-            totalAmountOfCases: "?",
-            totalAmountOfDeaths: "?",
-            amountOfCasesPer1000: "?",
-            amountOfDeathsPer1000: "?"
+            country: element.country, 
+            amountOfCases: element.amountOfCases,
+            amountOfDeaths: element.amountOfDeaths,
+            totalAmountOfCases: element.totalAmountOfCases,
+            totalAmountOfDeaths: element.totalAmountOfDeaths,
+            amountOfCasesPer1000: element.amountOfCasesPer1000,
+            amountOfDeathsPer1000: element.amountOfDeathsPer1000
         }
     });
 
     useEffect(() => {
 
-        getDataByAmount(9).then(result => {
-            dispatch(setTableData(result));
+        getDataByTablePageNumber(currentFilteredTableData, 9, 0).then(data => {
+            dispatch(setTableData(data));
         });
 
-    }, []);
+    }, [currentFilteredTableData]);
 
     
     return (
@@ -58,7 +58,7 @@ const CovidTable: React.FC = () => {
             rows={rows}
             headerRowHeight={78}
             rowHeight={30}
-            onCellClick={() => console.log(getCountriesDataSeparately())}
+            onCellClick={() => console.log()}
         />
     );
 }

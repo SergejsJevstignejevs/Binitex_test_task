@@ -17,6 +17,11 @@ div[role="columnheader"]{
 div[role="gridcell"]{
     display: flex;
     justify-content: center;
+    align-items: center;
+    text-align: center;
+    white-space: unset;
+    overflow: unset;
+    line-height: 1;
     background-color: var(--complement-beige);
     border-color: var(--grid-border-color);
 }
