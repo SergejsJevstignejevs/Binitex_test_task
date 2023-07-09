@@ -8,8 +8,9 @@ import { RootReducerState } from "../../redux/reducerStore";
 import { VisualizationChoiseState } from "../VisualizationSelectionPanel/dataVisualizationChoiseReducer";
 
 const CovidDashboard: React.FC = () => {
-    const visualizationChoiseState = useSelector<RootReducerState, VisualizationChoiseState>((state) => state.dataVisualizationChoiseReducer);
-    const visualizationChoise = visualizationChoiseState.visualizationChoise;
+    const { 
+        visualizationChoise 
+    } = useSelector<RootReducerState, VisualizationChoiseState>((state) => state.dataVisualizationChoiseReducer);
 
     return (
         <div className="CovidDashboard">

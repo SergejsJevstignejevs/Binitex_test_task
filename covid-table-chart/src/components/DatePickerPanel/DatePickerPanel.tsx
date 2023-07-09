@@ -19,13 +19,12 @@ import { useCovid19ServiceDI } from "../../contexts/Covid19ServiceProvider";
 
 
 const DatePickerPanel: React.FC = () => {
-    const dateState = useSelector<RootReducerState, DateState>((state) => state.dateReducer);
     const {
         minDate,
         maxDate,
         startDate,
         endDate
-    } = dateState
+    } = useSelector<RootReducerState, DateState>((state) => state.dateReducer);
     const { getMinMaxDates } = useCovid19ServiceDI();
     const dispatch = useDispatch();
 

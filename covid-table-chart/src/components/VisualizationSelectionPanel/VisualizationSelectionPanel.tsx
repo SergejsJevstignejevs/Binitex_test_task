@@ -10,8 +10,9 @@ import {
 import { RootReducerState } from "../../redux/reducerStore";
 
 const VisualizationSelectionPanel: React.FC = () => {
-    const visualizationChoiseState = useSelector<RootReducerState, VisualizationChoiseState>((state) => state.dataVisualizationChoiseReducer);
-    const visualizationChoise = visualizationChoiseState.visualizationChoise;
+    const {
+        visualizationChoise
+    } = useSelector<RootReducerState, VisualizationChoiseState>((state) => state.dataVisualizationChoiseReducer);
     const dispatch = useDispatch();
 
     const handleChoiseChange = (event: React.MouseEvent<HTMLLIElement>): void => {
