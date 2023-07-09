@@ -25,3 +25,9 @@ div[role="gridcell"]{
     background-color: var(--complement-beige);
     border-color: var(--bright-beige-border-color);
 }
+
+div[role="gridcell"][aria-selected='true'],
+div[role="columnheader"][aria-selected='true'] {
+    outline: 2px solid var(--blue-color);
+    outline-offset: -2px;
+}

@@ -56,7 +56,6 @@ const CovidTable: React.FC = () => {
             currentPageRowCount
         ).then(data => {
             dispatch(setCurrentTablePageData(data));
-            console.log("table changed");
         });
 
     }, [currentFilteredTableData, currentPageNumber, currentPageRowCount]);

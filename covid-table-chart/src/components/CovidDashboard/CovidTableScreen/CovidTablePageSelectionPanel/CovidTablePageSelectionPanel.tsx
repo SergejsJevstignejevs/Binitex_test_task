@@ -33,20 +33,12 @@ function CovidTablePageSelectionPanel() {
 
     }, [tableData]);
 
-    interface PageClickEvent {
-        index: number | null,
-        selected: number,
-        nextSelectedPage: number | undefined,
-        event: object,
-        isPrevious: boolean,
-        isNext: boolean,
-        isBreak: boolean,
-        isActive: boolean
+    interface PageChangeEvent {
+        selected: number
     };
 
-    const handlePageClick = (event: PageClickEvent) => {
+    const handlePageClick = (event: PageChangeEvent) => {
         dispatch(setCurrentPageNumber(event.selected + 1));
-        console.log("click");
     };
 
     return (
@@ -54,7 +46,7 @@ function CovidTablePageSelectionPanel() {
             <ReactPaginate
                 breakLabel="..."
                 nextLabel=">"
-                onClick={handlePageClick}
+                onPageChange={handlePageClick}
                 pageRangeDisplayed={3}
                 pageCount={pageCount}
                 previousLabel="<"/>

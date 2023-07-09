@@ -36,6 +36,20 @@
     border-left: none;
 }
 
+.CovidTablePageSelectionPanel > ul > li.selected{
+    background-color: var(--complement-beige);
+    outline: 2px solid var(--blue-color);
+    outline-offset: -2px;
+}
+
+.CovidTablePageSelectionPanel > ul > li.break{
+    background-color: var(--complement-beige);
+}
+
+.CovidTablePageSelectionPanel > ul > li:hover{
+    background-color: var(--darker-beige);
+}
+
 .CovidTablePageSelectionPanel > ul > li > a{
     display: flex;
     align-items: center;

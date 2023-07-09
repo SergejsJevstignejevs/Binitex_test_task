@@ -221,7 +221,7 @@ export default function useCovid19Service(): Covid19Service{
                 tableData.push(tableItem);
             }
         });
-        console.log(tableData);
+        
         return tableData;
        
     };
@@ -272,7 +272,7 @@ export default function useCovid19Service(): Covid19Service{
         currentTableData: TableCovidDataRepresentation[],
         currentPageNumber: number, 
         pageRowCount: number) => {
-        console.log(currentPageNumber);
+            
         const startIndex = (currentPageNumber - 1) * pageRowCount;
         const endIndex = startIndex + pageRowCount;
       
