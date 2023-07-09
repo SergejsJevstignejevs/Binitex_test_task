@@ -14,6 +14,10 @@ div[role="columnheader"]{
     border-color: var(--bright-beige-border-color);
 }
 
+div[role="columnheader"]:last-child{
+    border-right-color: transparent;
+}
+
 div[role="gridcell"]{
     display: flex;
     justify-content: center;
@@ -24,6 +28,14 @@ div[role="gridcell"]{
     line-height: 1;
     background-color: var(--complement-beige);
     border-color: var(--bright-beige-border-color);
+}
+
+div[role="gridcell"]:last-child{
+    border-right-color: transparent;
+}
+
+div[role="row"]:nth-child(10) > div[role="gridcell"]{
+    border-bottom-color: transparent;
 }
 
 div[role="gridcell"][aria-selected='true'],

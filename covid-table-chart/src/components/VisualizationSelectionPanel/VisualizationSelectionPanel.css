@@ -9,6 +9,7 @@
     border-bottom: none;
     border-right: none;
     align-self: flex-start;
+    box-sizing: border-box;
 }
 
 .ChoiseList {

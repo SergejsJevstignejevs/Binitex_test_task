@@ -3,6 +3,7 @@
     flex-direction: row;
     align-items: center;
     width: auto;
+    box-sizing: border-box;
 }
 
 .DatePickerPanel > *{

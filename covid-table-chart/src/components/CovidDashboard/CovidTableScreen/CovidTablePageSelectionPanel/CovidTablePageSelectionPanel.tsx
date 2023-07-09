@@ -17,21 +17,17 @@ import { useCovid19ServiceDI } from "../../../../contexts/Covid19ServiceProvider
 
 function CovidTablePageSelectionPanel() {
     const { currentFilteredTableData } = useCovid19ServiceDI();
-    const { 
-        currentPageNumber,
+    const {
         currentPageRowCount,
         pageCount
     } = useSelector<RootReducerState, PageSelectionState>((state) => state.pageSelectionReducer);
-    const { 
-        tableData 
-    } = useSelector<RootReducerState, TableDataState>((state) => state.tableDataReducer);
     const dispatch = useDispatch();
 
     useEffect(() => {
 
         dispatch(setPageCount(Math.ceil(currentFilteredTableData.length / currentPageRowCount)));
 
-    }, [tableData]);
+    }, [currentFilteredTableData]);
 
     interface PageChangeEvent {
         selected: number
