@@ -25,7 +25,7 @@ const columns = [
 ];
 
 const CovidTable: React.FC = () => {
-    const { tableData } = useSelector<RootReducerState, TableDataState>((state) => state.tableDataReducer);
+    const { currentTablePageData } = useSelector<RootReducerState, TableDataState>((state) => state.tableDataReducer);
     const { 
         currentPageNumber,
         currentPageRowCount 
@@ -36,7 +36,7 @@ const CovidTable: React.FC = () => {
         currentFilteredTableData 
     } = useCovid19ServiceDI();
 
-    const rows = tableData.map(element => {
+    const rows = currentTablePageData.map(element => {
         return {
             country: element.country, 
             amountOfCases: element.amountOfCases,
