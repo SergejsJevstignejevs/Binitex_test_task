@@ -7,6 +7,21 @@ import { TableCovidDataRepresentation } from "../components/CovidDashboard/Covid
 import { RootReducerState } from "../store";
 import { DateState } from "../components/DatePickerPanel/dateReducer";
 
+export interface Covid19Service {
+    process: string,
+    setProcess: React.Dispatch<React.SetStateAction<string>>,
+    getMinMaxDates: () => Promise<{
+        minDate: Date;
+        maxDate: Date;
+    }>,
+    getDataByTablePageNumber: (
+        currentTableData: TableCovidDataRepresentation[], 
+        currentPageNumber: number, 
+        pageRowCount: number) => Promise<TableCovidDataRepresentation[]>,
+    currentFilteredTableData: TableCovidDataRepresentation[],
+    setCurrentFilteredTableData: React.Dispatch<React.SetStateAction<TableCovidDataRepresentation[]>>
+}
+
 export interface Covid19APIData{
     "Cumulative_number_for_14_days_of_COVID-19_cases_per_100000": string,
     cases: number,
@@ -22,7 +37,7 @@ export interface Covid19APIData{
     year: string
 }
 
-export default function useCovid19Service(){
+export default function useCovid19Service(): Covid19Service{
 
     const { request, process, setProcess } = useHttp();
     const {
@@ -206,7 +221,7 @@ export default function useCovid19Service(){
                 tableData.push(tableItem);
             }
         });
-
+        console.log(tableData);
         return tableData;
        
     };

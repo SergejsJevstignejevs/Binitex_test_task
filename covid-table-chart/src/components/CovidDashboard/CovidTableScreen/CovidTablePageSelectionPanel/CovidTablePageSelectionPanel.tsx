@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import ReactPaginate from "react-paginate";
 
-import useCovid19Service from "../../../../hooks/covid19Service.hook";
+import "./CovidTablePageSelectionPanel.css";
+
 import { 
     setCurrentPageNumber,
     setPageCount
@@ -12,11 +13,10 @@ import {
 import { PageSelectionState } from "./pageSelectionReducer";
 import { RootReducerState } from "../../../../store";
 import { TableDataState } from "../CovidTable/tableDataReducer";
-
-import "./CovidTablePageSelectionPanel.css";
+import { useCovid19ServiceDI } from "../../../../contexts/Covid19ServiceProvider";
 
 function CovidTablePageSelectionPanel() {
-    const { currentFilteredTableData } = useCovid19Service();
+    const { currentFilteredTableData } = useCovid19ServiceDI();
     const { 
         currentPageNumber,
         currentPageRowCount,

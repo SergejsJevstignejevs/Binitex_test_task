@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import useCovid19Service from "../../../../hooks/covid19Service.hook";
-
 import DataGrid from 'react-data-grid';
 import 'react-data-grid/lib/styles.css';
 
@@ -14,6 +12,7 @@ import {
     setCurrentTablePageData
 } from "./tableDataReducer";
 import { PageSelectionState } from "../CovidTablePageSelectionPanel/pageSelectionReducer";
+import { useCovid19ServiceDI } from "../../../../contexts/Covid19ServiceProvider";
 
 const columns = [
     { key: 'country', name: 'Country', minWidth: 100 },
@@ -32,7 +31,10 @@ const CovidTable: React.FC = () => {
         currentPageRowCount 
     } = useSelector<RootReducerState, PageSelectionState>((state) => state.pageSelectionReducer);
     const dispatch = useDispatch();
-    const { getDataByTablePageNumber, currentFilteredTableData } = useCovid19Service();
+    const { 
+        getDataByTablePageNumber, 
+        currentFilteredTableData 
+    } = useCovid19ServiceDI();
 
     const rows = tableData.map(element => {
         return {

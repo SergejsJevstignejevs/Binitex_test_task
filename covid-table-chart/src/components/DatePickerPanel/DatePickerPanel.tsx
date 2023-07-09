@@ -6,8 +6,6 @@ import DatePicker from "react-datepicker";
 import "./DatePickerPanel.css";
 import "react-datepicker/dist/react-datepicker.css";
 
-import useCovid19Service from "../../hooks/covid19Service.hook";
-
 import { 
     DateState,
     setStartDate,
@@ -17,6 +15,7 @@ import {
 } from "./dateReducer";
 
 import { RootReducerState } from "../../store";
+import { useCovid19ServiceDI } from "../../contexts/Covid19ServiceProvider";
 
 
 const DatePickerPanel: React.FC = () => {
@@ -27,7 +26,7 @@ const DatePickerPanel: React.FC = () => {
         startDate,
         endDate
     } = dateState
-    const { getMinMaxDates } = useCovid19Service();
+    const { getMinMaxDates } = useCovid19ServiceDI();
     const dispatch = useDispatch();
 
     useEffect(() => {
