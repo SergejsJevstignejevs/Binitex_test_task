@@ -19,12 +19,13 @@ div[role="columnheader"]:last-child{
 }
 
 div[role="gridcell"]{
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     white-space: unset;
-    overflow: unset;
+    overflow: hidden;
     line-height: 1;
     background-color: var(--complement-beige);
     border-color: var(--bright-beige-border-color);
