@@ -33,7 +33,7 @@ export interface Covid19APIData{
     deaths: number,
     geoId: string,
     month: string,
-    popData2019: number,
+    popData2019: number | null,
     year: string
 }
 
@@ -204,8 +204,10 @@ export default function useCovid19Service(): Covid19Service{
             const amountOfDeaths = totalDeathsByDate;
             const totalAmountOfCases = dataOfCountriesTotalCasesAndDeaths[key].totalAmountOfCases;
             const totalAmountOfDeaths = dataOfCountriesTotalCasesAndDeaths[key].totalAmountOfDeaths;
-            const amountOfCasesPer1000 = Number((amountOfCases / popData2019 * 1000).toFixed(4))
-            const amountOfDeathsPer1000 = Number((amountOfDeaths / popData2019 * 1000).toFixed(4))
+            const amountOfCasesPer1000 = 
+                popData2019 !== null ? Number((amountOfCases / popData2019 * 1000).toFixed(4)): 0;
+            const amountOfDeathsPer1000 = 
+                popData2019 !== null ? Number((amountOfDeaths / popData2019 * 1000).toFixed(4)): 0;
 
             const tableItem: TableCovidDataRepresentation = {
                 country: key.replace(/_/g, " "),
