@@ -13,10 +13,16 @@ import {
 import { PageSelectionState } from "./pageSelectionReducer";
 import { RootReducerState } from "../../../../redux/reducerStore";
 import { TableDataState } from "../CovidTable/tableDataReducer";
-import { useCovid19ServiceDI } from "../../../../contexts/Covid19ServiceProvider";
+import { DateState } from "../../../DatePickerPanel/dateReducer";
 
 function CovidTablePageSelectionPanel() {
-    const { currentFilteredTableData } = useCovid19ServiceDI();
+    const { 
+        currentTableFilteredData 
+    } = useSelector<RootReducerState, TableDataState>((state) => state.tableDataReducer);
+    const {
+        startDate,
+        endDate
+    } = useSelector<RootReducerState, DateState>((state) => state.dateReducer);
     const {
         currentPageNumber,
         currentPageRowCount,
@@ -26,9 +32,17 @@ function CovidTablePageSelectionPanel() {
 
     useEffect(() => {
 
-        dispatch(setPageCount(Math.ceil(currentFilteredTableData.length / currentPageRowCount)));
+        dispatch(setPageCount(Math.ceil(currentTableFilteredData.length / currentPageRowCount)));
 
-    }, [currentFilteredTableData]);
+    }, [currentTableFilteredData]);
+
+    // useEffect(() => {
+
+    //     if(currentPageNumber > pageCount){
+    //         dispatch(setCurrentPageNumber(pageCount - 1));
+    //     }
+
+    // }, [pageCount]);
 
     interface PageChangeEvent {
         selected: number

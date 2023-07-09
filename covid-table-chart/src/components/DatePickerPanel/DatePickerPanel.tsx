@@ -14,9 +14,11 @@ import {
     setMaxDate
 } from "./dateReducer";
 
+import { setCurrentTableFilteredData } from "../CovidDashboard/CovidTableScreen/CovidTable/tableDataReducer";
+
 import { RootReducerState } from "../../redux/reducerStore";
 import { useCovid19ServiceDI } from "../../contexts/Covid19ServiceProvider";
-
+import { APIDataByCountriesState } from "../../hooks/apiDataByCountriesReducer";
 
 const DatePickerPanel: React.FC = () => {
     const {
@@ -25,7 +27,13 @@ const DatePickerPanel: React.FC = () => {
         startDate,
         endDate
     } = useSelector<RootReducerState, DateState>((state) => state.dateReducer);
-    const { getMinMaxDates } = useCovid19ServiceDI();
+    const {
+        apiDataByCountries
+    } = useSelector<RootReducerState, APIDataByCountriesState>((state) => state.apiDataByCountriesReducer);
+    const { 
+        getMinMaxDates,
+        filterAPIDataByDate
+    } = useCovid19ServiceDI();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -42,6 +50,15 @@ const DatePickerPanel: React.FC = () => {
         });
     
     }, []);
+
+    useEffect(() => {
+
+        filterAPIDataByDate(apiDataByCountries, startDate, endDate)
+            .then((result) => {
+            dispatch(setCurrentTableFilteredData(result));
+        });
+
+    }, [startDate, endDate]);
 
     return (
         <div className="DatePickerPanel">

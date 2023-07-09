@@ -25,15 +25,17 @@ const columns = [
 ];
 
 const CovidTable: React.FC = () => {
-    const { currentTablePageData } = useSelector<RootReducerState, TableDataState>((state) => state.tableDataReducer);
+    const { 
+        currentTablePageData,
+        currentTableFilteredData
+    } = useSelector<RootReducerState, TableDataState>((state) => state.tableDataReducer);
     const { 
         currentPageNumber,
-        currentPageRowCount 
+        currentPageRowCount
     } = useSelector<RootReducerState, PageSelectionState>((state) => state.pageSelectionReducer);
     const dispatch = useDispatch();
     const { 
-        getDataByTablePageNumber, 
-        currentFilteredTableData 
+        getDataByTablePageNumber
     } = useCovid19ServiceDI();
 
     const rows = currentTablePageData.map(element => {
@@ -49,16 +51,16 @@ const CovidTable: React.FC = () => {
     });
 
     useEffect(() => {
-
+        
         getDataByTablePageNumber(
-            currentFilteredTableData, 
+            currentTableFilteredData, 
             currentPageNumber, 
             currentPageRowCount
         ).then(data => {
             dispatch(setCurrentTablePageData(data));
         });
 
-    }, [currentFilteredTableData, currentPageNumber, currentPageRowCount]);
+    }, [currentTableFilteredData, currentPageNumber, currentPageRowCount]);
     
     return (
         <DataGrid

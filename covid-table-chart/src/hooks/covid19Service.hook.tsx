@@ -1,9 +1,11 @@
-import { useMemo, useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useMemo, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import useHttp from "./http.hook";
 
 import { TableCovidDataRepresentation } from "../components/CovidDashboard/CovidTableScreen/CovidTable/tableDataReducer";
+import { setCurrentTableFilteredData } from "../components/CovidDashboard/CovidTableScreen/CovidTable/tableDataReducer";
+import { setAPIDataByCountries } from "./apiDataByCountriesReducer";
 import { RootReducerState } from "../redux/reducerStore";
 import { DateState } from "../components/DatePickerPanel/dateReducer";
 
@@ -18,8 +20,11 @@ export interface Covid19Service {
         currentTableData: TableCovidDataRepresentation[], 
         currentPageNumber: number, 
         pageRowCount: number) => Promise<TableCovidDataRepresentation[]>,
-    currentFilteredTableData: TableCovidDataRepresentation[],
-    setCurrentFilteredTableData: React.Dispatch<React.SetStateAction<TableCovidDataRepresentation[]>>
+    filterAPIDataByDate(
+        apiDataByCountries: APICountryNameCountryData,
+        startDate: Date | null,
+        endDate: Date | null
+    ): Promise<TableCovidDataRepresentation[]>
 }
 
 export interface Covid19APIData{
@@ -37,6 +42,10 @@ export interface Covid19APIData{
     year: string
 }
 
+export interface APICountryNameCountryData{
+    [country: string]: Covid19APIData[]
+}
+
 export default function useCovid19Service(): Covid19Service{
 
     const { request, process, setProcess } = useHttp();
@@ -44,7 +53,7 @@ export default function useCovid19Service(): Covid19Service{
         startDate,
         endDate
     } = useSelector<RootReducerState, DateState>((state) => state.dateReducer);
-    const [currentFilteredTableData, setCurrentFilteredTableData] = useState<TableCovidDataRepresentation[]>([]);
+    const dispatch = useDispatch();
 
     const _apiBase = "https://opendata.ecdc.europa.eu/covid19/casedistribution/json/";
 
@@ -55,10 +64,10 @@ export default function useCovid19Service(): Covid19Service{
       
     const covid19Data = useMemo(() => _fetchData(), [_apiBase]);
 
-    const _transformCountriesDataSeparately = async () =>  {
+    const _transformAPIDataToCountriesNamesCountriesData = async () =>  {
 
         const data = await covid19Data;
-        const countriesData: { [key: string]: Covid19APIData[] } = {};
+        const countriesData: APICountryNameCountryData = {};
 
         data.records.forEach((item: Covid19APIData) => {
             const { countriesAndTerritories } = item;
@@ -71,69 +80,20 @@ export default function useCovid19Service(): Covid19Service{
             }
         });
 
-        return countriesData;
+        const sortedCountriesDataAlphabetically: APICountryNameCountryData = {};
+        Object.keys(countriesData)
+            .sort((a, b) => a.localeCompare(b))
+            .forEach((key) => {
+                sortedCountriesDataAlphabetically[key] = countriesData[key];
+            });
+
+        return sortedCountriesDataAlphabetically;
 
     };
 
     const covid19DataByCountries = useMemo(() => 
-        _transformCountriesDataSeparately(), 
+        _transformAPIDataToCountriesNamesCountriesData(), 
         [covid19Data]
-    );
-
-    const _sortCountriesDataKeys = async (dataByCountries: Promise<{ [key: string]: Covid19APIData[] }>) => {
-        const data = await dataByCountries;
-        const sortedKeys = Object.keys(data).sort();
-        
-        const sortedCountriesDataByAlphabet: { [key: string]: Covid19APIData[] } = {};
-        sortedKeys.forEach((key) => {
-            sortedCountriesDataByAlphabet[key] = data[key];
-        });
-        
-        return sortedCountriesDataByAlphabet;
-    };
-
-    const covid19DataByCountriesOrderedByAlphabet = useMemo(() => 
-        _sortCountriesDataKeys(covid19DataByCountries), 
-        [covid19DataByCountries]
-    );
-
-    
-    const _filterDataByDate = async (
-        dataByCountriesOrderedByAlphabet: Promise<{ [key: string]: Covid19APIData[] }>, 
-        startDate: Date | null, 
-        endDate: Date | null) => {
-
-        const data = await dataByCountriesOrderedByAlphabet;
-        const dataFilteredByDate: { [key: string]: Covid19APIData[] } = {}; 
-
-        Object.entries(data).forEach(([key, value]) => {
-            // `key` is the country name
-            // `value` is the array of Covid19APIData
-
-            const valueFilteredByDate = value.filter((item) => {
-                const dateString = item.dateRep;
-                const [day, month, year] = dateString.split("/");
-                let currentItemDate = new Date(`${month}/${day}/${year}`);
-
-                return (
-                    (!startDate || currentItemDate >= startDate) && 
-                    (!endDate || currentItemDate <= endDate)
-                );
-            });
-
-            if (valueFilteredByDate.length > 0) {
-                dataFilteredByDate[key] = valueFilteredByDate;
-            }
-
-        });
-
-        return dataFilteredByDate;
-
-    };
-
-    const covid19DataByCountriesOrderedByAlphabetFilteredByDate = useMemo(() => 
-        _filterDataByDate(covid19DataByCountriesOrderedByAlphabet, startDate, endDate), 
-        [covid19DataByCountriesOrderedByAlphabet, startDate, endDate]
     );
 
     interface CountriesTotalCasesAndDeaths{
@@ -144,19 +104,15 @@ export default function useCovid19Service(): Covid19Service{
     }
 
     const _getTotalCasesAndDeaths = async (
-        dataByCountriesOrderedByAlphabet: Promise<{ [key: string]: Covid19APIData[] }>) => {
-        const data = await dataByCountriesOrderedByAlphabet;
+        dataByCountries: Promise<APICountryNameCountryData>) => {
+        const data = await dataByCountries;
         const countriesTotalCasesAndDeaths: CountriesTotalCasesAndDeaths = {};
 
-        Object.entries(data).forEach(([key, value]) => {
-            // `key` is the country name
-            // `value` is the array of Covid19APIData
-            const { popData2019 } = value[0];
-        
+        Object.entries(data).forEach(([countryName, countryData]) => {
             let totalCases = 0;
             let totalDeaths = 0;
 
-            value.forEach((element) => {
+            countryData.forEach((element) => {
                 const { cases, deaths } = element;
                 totalCases += cases;
                 totalDeaths += deaths;
@@ -165,7 +121,7 @@ export default function useCovid19Service(): Covid19Service{
             const totalAmountOfCases = totalCases;
             const totalAmountOfDeaths = totalDeaths;
 
-            countriesTotalCasesAndDeaths[key] = {
+            countriesTotalCasesAndDeaths[countryName] = {
                 totalAmountOfCases,
                 totalAmountOfDeaths
             }
@@ -175,42 +131,43 @@ export default function useCovid19Service(): Covid19Service{
     };
 
     const covid19CountriesTotalCasesAndDeaths = useMemo(() => 
-        _getTotalCasesAndDeaths(covid19DataByCountriesOrderedByAlphabet), 
-        [covid19DataByCountriesOrderedByAlphabet]
+        _getTotalCasesAndDeaths(covid19DataByCountries), 
+        [covid19DataByCountries]
     );
 
     const _transformToTableData = async (
-        dataByCountriesOrderedByAlphabetFilteredByDate: Promise<{ [key: string]: Covid19APIData[] }>,
+        dataByCountries: Promise<APICountryNameCountryData>,
         countriesTotalCasesAndDeaths: Promise<CountriesTotalCasesAndDeaths>) => {
-        const data = await dataByCountriesOrderedByAlphabetFilteredByDate;
+        const apiDataByCountries = await dataByCountries;
         const dataOfCountriesTotalCasesAndDeaths = await countriesTotalCasesAndDeaths;
         const tableData: TableCovidDataRepresentation[] = [];
 
-        Object.entries(data).forEach(([key, value]) => {
-            // `key` is the country name
-            // `value` is the array of Covid19APIData
-            const { popData2019 } = value[0];
+        Object.entries(apiDataByCountries).forEach(([countryName, countryData]) => {
+            if (countryData.length === 0) {
+                return;
+            }
+          
+            const { popData2019 } = countryData[0];
         
-            let totalCasesByDate = 0;
-            let totalDeathsByDate = 0;
+            let totalCases = 0;
+            let totalDeaths = 0;
 
-            value.forEach((element) => {
-                const { cases, deaths } = element;
-                totalCasesByDate += cases;
-                totalDeathsByDate += deaths;
+            countryData.forEach((element) => {
+                totalCases += element.cases;
+                totalDeaths += element.deaths;
             });
 
-            const amountOfCases = totalCasesByDate;
-            const amountOfDeaths = totalDeathsByDate;
-            const totalAmountOfCases = dataOfCountriesTotalCasesAndDeaths[key].totalAmountOfCases;
-            const totalAmountOfDeaths = dataOfCountriesTotalCasesAndDeaths[key].totalAmountOfDeaths;
+            const amountOfCases = totalCases;
+            const amountOfDeaths = totalDeaths;
+            const totalAmountOfCases = dataOfCountriesTotalCasesAndDeaths[countryName].totalAmountOfCases;
+            const totalAmountOfDeaths = dataOfCountriesTotalCasesAndDeaths[countryName].totalAmountOfDeaths;
             const amountOfCasesPer1000 = 
                 popData2019 !== null ? Number((amountOfCases / popData2019 * 1000).toFixed(4)): 0;
             const amountOfDeathsPer1000 = 
                 popData2019 !== null ? Number((amountOfDeaths / popData2019 * 1000).toFixed(4)): 0;
 
             const tableItem: TableCovidDataRepresentation = {
-                country: key.replace(/_/g, " "),
+                country: countryName.replace(/_/g, " "),
                 amountOfCases,
                 amountOfDeaths,
                 totalAmountOfCases,
@@ -219,7 +176,7 @@ export default function useCovid19Service(): Covid19Service{
                 amountOfDeathsPer1000,
             };
 
-            if(totalAmountOfCases > 0){
+            if(amountOfCases > 0){
                 tableData.push(tableItem);
             }
         });
@@ -228,18 +185,17 @@ export default function useCovid19Service(): Covid19Service{
        
     };
 
-    const initialTableData = useMemo(() => 
-        _transformToTableData(
-            covid19DataByCountriesOrderedByAlphabetFilteredByDate,
-            covid19CountriesTotalCasesAndDeaths), 
-        [covid19DataByCountriesOrderedByAlphabetFilteredByDate, covid19CountriesTotalCasesAndDeaths]
-    );
-
     useEffect(() => {
-        initialTableData.then((data) => {
-            setCurrentFilteredTableData(data);
+        _transformToTableData(
+            covid19DataByCountries,
+            covid19CountriesTotalCasesAndDeaths
+        ).then((tableData) => {
+            dispatch(setCurrentTableFilteredData(tableData));
         });
-    }, [initialTableData]);
+        covid19DataByCountries.then((data) => {
+            dispatch(setAPIDataByCountries(data));
+        })
+    }, []);
 
     const getMinMaxDates = async () => {
         const data = (await covid19Data).records;
@@ -271,14 +227,40 @@ export default function useCovid19Service(): Covid19Service{
     }
 
     const getDataByTablePageNumber = async (
-        currentTableData: TableCovidDataRepresentation[],
+        currentTableFullData: TableCovidDataRepresentation[],
         currentPageNumber: number, 
         pageRowCount: number) => {
             
         const startIndex = (currentPageNumber - 1) * pageRowCount;
         const endIndex = startIndex + pageRowCount;
       
-        return currentTableData.slice(startIndex, endIndex);
+        return currentTableFullData.slice(startIndex, endIndex);
+    };
+
+    const filterAPIDataByDate = async (
+        apiDataByCountries: APICountryNameCountryData,
+        startDate: Date | null,
+        endDate: Date | null
+      ): Promise<TableCovidDataRepresentation[]> => {
+        const filteredDataByDate: APICountryNameCountryData = {};
+        
+        Object.entries(apiDataByCountries).forEach(([countryName, countryData]) => {
+            filteredDataByDate[countryName] = countryData.filter((item) => {
+                const dateString = item.dateRep;
+                const [day, month, year] = dateString.split("/");
+                const currentItemDate = new Date(`${month}/${day}/${year}`);
+            
+                return (
+                    (!startDate || currentItemDate >= startDate) &&
+                    (!endDate || currentItemDate <= endDate)
+                );
+            });
+        });
+
+        return await _transformToTableData(
+            Promise.resolve(filteredDataByDate), 
+            covid19CountriesTotalCasesAndDeaths
+        );
     };
 
     return { 
@@ -286,8 +268,7 @@ export default function useCovid19Service(): Covid19Service{
         setProcess,
         getMinMaxDates,
         getDataByTablePageNumber,
-        currentFilteredTableData, 
-        setCurrentFilteredTableData
+        filterAPIDataByDate
     };
 
 }
