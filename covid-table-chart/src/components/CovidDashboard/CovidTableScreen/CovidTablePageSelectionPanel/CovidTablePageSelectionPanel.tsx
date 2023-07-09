@@ -18,6 +18,7 @@ import { useCovid19ServiceDI } from "../../../../contexts/Covid19ServiceProvider
 function CovidTablePageSelectionPanel() {
     const { currentFilteredTableData } = useCovid19ServiceDI();
     const {
+        currentPageNumber,
         currentPageRowCount,
         pageCount
     } = useSelector<RootReducerState, PageSelectionState>((state) => state.pageSelectionReducer);
@@ -45,7 +46,8 @@ function CovidTablePageSelectionPanel() {
                 onPageChange={handlePageClick}
                 pageRangeDisplayed={3}
                 pageCount={pageCount}
-                previousLabel="<"/>
+                previousLabel="<"
+                forcePage={currentPageNumber - 1}/>
         </div>
     );
 }
