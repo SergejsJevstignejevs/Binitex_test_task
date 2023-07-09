@@ -6,7 +6,7 @@ import 'react-data-grid/lib/styles.css';
 
 import "./CovidTable.css";
 
-import { RootReducerState } from "../../../../store";
+import { RootReducerState } from "../../../../redux/reducerStore";
 import { 
     TableDataState,
     setCurrentTablePageData

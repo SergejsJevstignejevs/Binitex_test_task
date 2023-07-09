@@ -4,7 +4,7 @@ import CovidTableScreen from "./CovidTableScreen/CovidTableScreen";
 
 import "./CovidDashboard.css";
 
-import { RootReducerState } from "../../store";
+import { RootReducerState } from "../../redux/reducerStore";
 import { VisualizationChoiseState } from "../VisualizationSelectionPanel/dataVisualizationChoiseReducer";
 
 const CovidDashboard: React.FC = () => {

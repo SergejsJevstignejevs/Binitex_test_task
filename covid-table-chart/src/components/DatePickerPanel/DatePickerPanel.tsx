@@ -14,7 +14,7 @@ import {
     setMaxDate
 } from "./dateReducer";
 
-import { RootReducerState } from "../../store";
+import { RootReducerState } from "../../redux/reducerStore";
 import { useCovid19ServiceDI } from "../../contexts/Covid19ServiceProvider";
 
 

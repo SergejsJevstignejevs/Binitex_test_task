@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import useHttp from "./http.hook";
 
 import { TableCovidDataRepresentation } from "../components/CovidDashboard/CovidTableScreen/CovidTable/tableDataReducer";
-import { RootReducerState } from "../store";
+import { RootReducerState } from "../redux/reducerStore";
 import { DateState } from "../components/DatePickerPanel/dateReducer";
 
 export interface Covid19Service {

@@ -7,7 +7,7 @@ import {
     setVisualizationChoise
 } from "./dataVisualizationChoiseReducer";
 
-import { RootReducerState } from "../../store";
+import { RootReducerState } from "../../redux/reducerStore";
 
 const VisualizationSelectionPanel: React.FC = () => {
     const visualizationChoiseState = useSelector<RootReducerState, VisualizationChoiseState>((state) => state.dataVisualizationChoiseReducer);

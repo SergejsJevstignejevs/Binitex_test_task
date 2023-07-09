@@ -11,7 +11,7 @@ import {
     setPageCount
 } from "./pageSelectionReducer";
 import { PageSelectionState } from "./pageSelectionReducer";
-import { RootReducerState } from "../../../../store";
+import { RootReducerState } from "../../../../redux/reducerStore";
 import { TableDataState } from "../CovidTable/tableDataReducer";
 import { useCovid19ServiceDI } from "../../../../contexts/Covid19ServiceProvider";
 

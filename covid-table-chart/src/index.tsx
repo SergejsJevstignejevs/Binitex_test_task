@@ -7,7 +7,7 @@ import './index.css';
 import App from './components/App/App';
 import { Covid19ServiceProvider } from './contexts/Covid19ServiceProvider';
 
-import { store } from './store';
+import { reducerStore } from './redux/reducerStore';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,7 +15,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <Provider store={reducerStore}>
       <Covid19ServiceProvider>
         <App />
       </Covid19ServiceProvider>
