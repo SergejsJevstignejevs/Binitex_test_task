@@ -13,16 +13,15 @@ import {
 import { PageSelectionState } from "./pageSelectionReducer";
 import { RootReducerState } from "../../../../redux/reducerStore";
 import { TableDataState } from "../CovidTable/tableDataReducer";
-import { DateState } from "../../../DatePickerPanel/dateReducer";
+import { VisualizationChoiseState } from "../../../VisualizationSelectionPanel/dataVisualizationChoiseReducer";
 
 function CovidTablePageSelectionPanel() {
     const { 
         currentTableFilteredData 
     } = useSelector<RootReducerState, TableDataState>((state) => state.tableDataReducer);
     const {
-        startDate,
-        endDate
-    } = useSelector<RootReducerState, DateState>((state) => state.dateReducer);
+        visualizationChoise
+    } = useSelector<RootReducerState, VisualizationChoiseState>((state) => state.dataVisualizationChoiseReducer);
     const {
         currentPageNumber,
         currentPageRowCount,
@@ -32,17 +31,19 @@ function CovidTablePageSelectionPanel() {
 
     useEffect(() => {
 
-        dispatch(setPageCount(Math.ceil(currentTableFilteredData.length / currentPageRowCount)));
+        if (currentTableFilteredData.length > 0) {
+            dispatch(setPageCount(Math.ceil(currentTableFilteredData.length / currentPageRowCount)));
+        }
 
-    }, [currentTableFilteredData]);
+    }, [currentTableFilteredData, currentPageRowCount]);
 
-    // useEffect(() => {
+    useEffect(() => {
+        
+        if (visualizationChoise === "table" && currentPageNumber > pageCount) {
+            dispatch(setCurrentPageNumber(pageCount));
+        }
 
-    //     if(currentPageNumber > pageCount){
-    //         dispatch(setCurrentPageNumber(pageCount - 1));
-    //     }
-
-    // }, [pageCount]);
+    }, [visualizationChoise, currentPageNumber, pageCount]);
 
     interface PageChangeEvent {
         selected: number
