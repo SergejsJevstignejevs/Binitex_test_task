@@ -1,0 +1,20 @@
+.ClearFiltersButton{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 35px;
+    background-color: var(--beige-color);
+    border: 1px solid var(--bright-beige-border-color);
+    cursor: pointer;
+}
+
+.ClearFiltersButton:hover{
+    background-color: var(--darker-beige);
+}
+
+.ClearFiltersButton > span{
+    font-weight: bold;
+    font-size: 1.05em;
+}

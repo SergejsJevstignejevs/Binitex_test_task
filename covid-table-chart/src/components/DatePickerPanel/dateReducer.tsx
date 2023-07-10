@@ -24,6 +24,11 @@ export const setMaxDate = (maxDate: Date): DateAction => ({
     payload: maxDate,
 });
 
+export const resetDateReducer = (): DateAction => ({
+    type: "RESET_DATE_REDUCER",
+    payload: new Date(),
+});
+
 //State definition
 export interface DateState {
     startDate: Date | null,
@@ -52,6 +57,9 @@ export function dateReducer(state: DateState = initialState, action: DateAction)
         }
         case "SET_MAX_DATE":{
             return { ...state, maxDate: action.payload };
+        }
+        case "RESET_DATE_REDUCER":{
+            return initialState;
         }
         default:{
             return state;

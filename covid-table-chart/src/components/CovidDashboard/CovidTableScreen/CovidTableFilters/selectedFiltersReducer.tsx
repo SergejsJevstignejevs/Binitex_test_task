@@ -6,12 +6,17 @@ interface SelectedFiltersAction {
 // Action creators
 export const setInputCountryValue = (inputCountryValue: string): SelectedFiltersAction => ({
     type: "SET_INPUT_COUNTRY_VALUE",
-    payload: inputCountryValue,
+    payload: inputCountryValue
 });
 
 export const setSelectedCountry = (selectedCountry: string): SelectedFiltersAction => ({
     type: "SET_SELECTED_COUNTRY",
-    payload: selectedCountry,
+    payload: selectedCountry
+});
+
+export const resetSelectedFiltersReducer = (): SelectedFiltersAction => ({
+    type: "RESET_SELECTED_FILTERS_REDUCER",
+    payload: ""
 });
 
 //State definition
@@ -35,6 +40,9 @@ export function selectedFiltersReducer(
         }
         case "SET_SELECTED_COUNTRY":{
             return { ...state, selectedCountry: action.payload };
+        }
+        case "RESET_SELECTED_FILTERS_REDUCER":{
+            return initialState;
         }
         default:{
             return state;

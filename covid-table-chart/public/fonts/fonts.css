@@ -5,6 +5,6 @@
          url('Roboto-Regular.ttf') format('truetype');
 }
 
-body {
+* {
     font-family: 'Roboto', sans-serif !important;
 }

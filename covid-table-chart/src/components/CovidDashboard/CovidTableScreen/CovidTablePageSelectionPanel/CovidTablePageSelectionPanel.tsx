@@ -14,6 +14,7 @@ import { PageSelectionState } from "./pageSelectionReducer";
 import { RootReducerState } from "../../../../redux/reducerStore";
 import { TableDataState } from "../CovidTable/tableDataReducer";
 import { VisualizationChoiseState } from "../../../VisualizationSelectionPanel/dataVisualizationChoiseReducer";
+import { ClearFiltersState } from "../CovidTableFilters/CovidCountryFilter/clearFiltersReducer";
 
 function CovidTablePageSelectionPanel() {
     const { 
@@ -27,6 +28,9 @@ function CovidTablePageSelectionPanel() {
         currentPageRowCount,
         pageCount
     } = useSelector<RootReducerState, PageSelectionState>((state) => state.pageSelectionReducer);
+    const { 
+        clearFiltersToggle
+    } = useSelector<RootReducerState, ClearFiltersState>((state) =>  state.clearFiltersReducer);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -35,7 +39,7 @@ function CovidTablePageSelectionPanel() {
             dispatch(setPageCount(Math.ceil(currentTableFilteredData.length / currentPageRowCount)));
         }
 
-    }, [currentTableFilteredData, currentPageRowCount]);
+    }, [currentTableFilteredData, currentPageRowCount, clearFiltersToggle]);
 
     useEffect(() => {
         
@@ -43,7 +47,7 @@ function CovidTablePageSelectionPanel() {
             dispatch(setCurrentPageNumber(pageCount));
         }
 
-    }, [visualizationChoise, currentPageNumber, pageCount]);
+    }, [visualizationChoise, currentPageNumber, pageCount, clearFiltersToggle]);
 
     interface PageChangeEvent {
         selected: number

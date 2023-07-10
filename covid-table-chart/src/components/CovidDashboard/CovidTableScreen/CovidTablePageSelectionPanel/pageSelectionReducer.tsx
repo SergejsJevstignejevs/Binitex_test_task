@@ -19,6 +19,11 @@ export const setPageCount = (currentPageCount: number): PageSelectionAction => (
     payload: currentPageCount,
 });
 
+export const resetPageSelectionReducer = (): PageSelectionAction => ({
+    type: "RESET_PAGE_SELECTION_REDUCER",
+    payload: 1,
+});
+
 //State definition
 export interface PageSelectionState {
     currentPageNumber: number,
@@ -45,6 +50,9 @@ export function pageSelectionReducer(
         }
         case "SET_PAGE_COUNT":{
             return { ...state, pageCount: action.payload };
+        }
+        case "RESET_PAGE_SELECTION_REDUCER":{
+            return initialState;
         }
         default:{
             return state;

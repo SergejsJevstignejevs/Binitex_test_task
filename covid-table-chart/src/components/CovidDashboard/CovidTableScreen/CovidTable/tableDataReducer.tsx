@@ -29,6 +29,11 @@ export const setFullTableDataFilteredByDate = (fullTableDataFilteredByDate: Arra
     payload: fullTableDataFilteredByDate,
 });
 
+export const resetTableDataReducer = (): TableDataAction => ({
+    type: "RESET_TABLE_DATA_REDUCER",
+    payload: [],
+});
+
 //State definition
 export interface TableDataState {
     currentTablePageData: Array<TableCovidDataRepresentation>,
@@ -52,6 +57,9 @@ export function tableDataReducer(state: TableDataState = initialState, action: T
         }
         case "SET_FULL_TABLE_DATA_FILTERED_BY_DATE":{
             return { ...state, fullTableDataFilteredByDate: [...action.payload] };
+        }
+        case "RESET_TABLE_DATA_REDUCER":{
+            return initialState;
         }
         default:{
             return state;

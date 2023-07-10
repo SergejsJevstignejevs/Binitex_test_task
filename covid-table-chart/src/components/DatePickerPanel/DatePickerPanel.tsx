@@ -17,6 +17,7 @@ import {
 import { setFullTableDataFilteredByDate } from "../CovidDashboard/CovidTableScreen/CovidTable/tableDataReducer";
 
 import { RootReducerState } from "../../redux/reducerStore";
+import { ClearFiltersState } from "../CovidDashboard/CovidTableScreen/CovidTableFilters/CovidCountryFilter/clearFiltersReducer";
 import { useCovid19ServiceDI } from "../../contexts/Covid19ServiceProvider";
 import { APIDataByCountriesState } from "../../hooks/apiDataByCountriesReducer";
 
@@ -30,6 +31,9 @@ const DatePickerPanel: React.FC = () => {
     const {
         apiDataByCountries
     } = useSelector<RootReducerState, APIDataByCountriesState>((state) => state.apiDataByCountriesReducer);
+    const {
+        clearFiltersToggle
+    } = useSelector<RootReducerState, ClearFiltersState>((state) => state.clearFiltersReducer);
     const { 
         getMinMaxDates,
         filterAPIDataByDate
@@ -49,7 +53,7 @@ const DatePickerPanel: React.FC = () => {
             }
         });
     
-    }, []);
+    }, [clearFiltersToggle]);
 
     useEffect(() => {
 

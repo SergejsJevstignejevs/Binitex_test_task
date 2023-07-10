@@ -6,6 +6,7 @@ import { tableDataReducer } from "../components/CovidDashboard/CovidTableScreen/
 import { pageSelectionReducer } from "../components/CovidDashboard/CovidTableScreen/CovidTablePageSelectionPanel/pageSelectionReducer";
 import { apiDataByCountriesReducer } from "../hooks/apiDataByCountriesReducer";
 import { selectedFiltersReducer } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/selectedFiltersReducer";
+import { clearFiltersReducer } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/CovidCountryFilter/clearFiltersReducer";
 
 import { DateState } from "../components/DatePickerPanel/dateReducer";
 import { VisualizationChoiseState } from "../components/VisualizationSelectionPanel/dataVisualizationChoiseReducer";
@@ -13,6 +14,7 @@ import { TableDataState } from "../components/CovidDashboard/CovidTableScreen/Co
 import { PageSelectionState } from "../components/CovidDashboard/CovidTableScreen/CovidTablePageSelectionPanel/pageSelectionReducer";
 import { APIDataByCountriesState } from "../hooks/apiDataByCountriesReducer";
 import { SelectedFiltersState } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/selectedFiltersReducer";
+import { ClearFiltersState } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/CovidCountryFilter/clearFiltersReducer";
 
 export interface RootReducerState {
     dateReducer: DateState,
@@ -20,7 +22,8 @@ export interface RootReducerState {
     tableDataReducer: TableDataState,
     pageSelectionReducer: PageSelectionState,
     apiDataByCountriesReducer: APIDataByCountriesState,
-    selectedFiltersReducer: SelectedFiltersState
+    selectedFiltersReducer: SelectedFiltersState,
+    clearFiltersReducer: ClearFiltersState
 }
 
 const rootReducer = combineReducers({
@@ -29,7 +32,8 @@ const rootReducer = combineReducers({
     tableDataReducer,
     pageSelectionReducer,
     apiDataByCountriesReducer,
-    selectedFiltersReducer
+    selectedFiltersReducer,
+    clearFiltersReducer
 });
 
 export const reducerStore = createStore(rootReducer);
