@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import useHttp from "./http.hook";
 
 import { TableCovidDataRepresentation } from "../components/CovidDashboard/CovidTableScreen/CovidTable/tableDataReducer";
-import { setCurrentTableFilteredData } from "../components/CovidDashboard/CovidTableScreen/CovidTable/tableDataReducer";
 import { setAPIDataByCountries } from "./apiDataByCountriesReducer";
 import { RootReducerState } from "../redux/reducerStore";
 import { DateState } from "../components/DatePickerPanel/dateReducer";
@@ -24,7 +23,11 @@ export interface Covid19Service {
         apiDataByCountries: APICountryNameCountryData,
         startDate: Date | null,
         endDate: Date | null
-    ): Promise<TableCovidDataRepresentation[]>
+    ): Promise<TableCovidDataRepresentation[]>,
+    filterBySelectedCountry(
+        currentTableData: TableCovidDataRepresentation[], 
+        country: string
+    ): TableCovidDataRepresentation[]
 }
 
 export interface Covid19APIData{
@@ -259,12 +262,28 @@ export default function useCovid19Service(): Covid19Service{
         );
     };
 
+    const filterBySelectedCountry = (
+        currentTableData: TableCovidDataRepresentation[], 
+        country: string
+    ): TableCovidDataRepresentation[] => {
+        if (country.length === 0) {
+            return currentTableData;
+        }
+
+        const filteredByCountry = currentTableData.filter((element) => {
+            return element.country.toLowerCase().includes(country.toLowerCase());
+        });
+    
+        return filteredByCountry;
+    };
+
     return { 
         process,
         setProcess,
         getMinMaxDates,
         getDataByTablePageNumber,
-        filterAPIDataByDate
+        filterAPIDataByDate,
+        filterBySelectedCountry
     };
 
 }

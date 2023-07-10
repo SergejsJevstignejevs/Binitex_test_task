@@ -41,6 +41,6 @@ div[role="row"]:nth-child(10) > div[role="gridcell"]{
 
 div[role="gridcell"][aria-selected='true'],
 div[role="columnheader"][aria-selected='true'] {
-    outline: 2px solid var(--blue-color);
+    outline: 2px solid var(--complement-blue);
     outline-offset: -2px;
 }

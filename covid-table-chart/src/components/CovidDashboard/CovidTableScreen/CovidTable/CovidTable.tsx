@@ -13,6 +13,7 @@ import {
     setCurrentTableFilteredData
 } from "./tableDataReducer";
 import { PageSelectionState } from "../CovidTablePageSelectionPanel/pageSelectionReducer";
+import { SelectedFiltersState } from "../CovidTableFilters/selectedFiltersReducer";
 import { useCovid19ServiceDI } from "../../../../contexts/Covid19ServiceProvider";
 
 const columns = [
@@ -35,9 +36,13 @@ const CovidTable: React.FC = () => {
         currentPageNumber,
         currentPageRowCount
     } = useSelector<RootReducerState, PageSelectionState>((state) => state.pageSelectionReducer);
+    const {
+        selectedCountry
+    } = useSelector<RootReducerState, SelectedFiltersState>((state) => state.selectedFiltersReducer);
     const dispatch = useDispatch();
     const { 
-        getDataByTablePageNumber
+        getDataByTablePageNumber,
+        filterBySelectedCountry
     } = useCovid19ServiceDI();
 
     const rows = currentTablePageData.map(element => {
@@ -54,9 +59,21 @@ const CovidTable: React.FC = () => {
 
     useEffect(() => {
 
-        dispatch(setCurrentTableFilteredData(fullTableDataFilteredByDate));
+        if (selectedCountry.length > 0) {
 
-    }, [fullTableDataFilteredByDate]);
+            const filteredData = filterBySelectedCountry(
+                fullTableDataFilteredByDate,
+                selectedCountry
+            );
+            dispatch(setCurrentTableFilteredData(filteredData));
+
+        } else {
+
+            dispatch(setCurrentTableFilteredData(fullTableDataFilteredByDate));
+
+        }
+
+    }, [fullTableDataFilteredByDate, selectedCountry]);
 
     useEffect(() => {
         

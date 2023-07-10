@@ -1,0 +1,48 @@
+.CovidCountryFilter{
+    display: flex;
+    flex-direction: row;
+    width: 165px;
+    height: 30px;
+}
+
+.CovidCountryFilter > input,
+.CovidCountryFilter > button{
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    border: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.CovidCountryFilter > input{
+    padding: 0 5px 0 5px;
+    width: 125px;
+    border: 1px solid var(--bright-beige-border-color);
+    background-color: var(--complement-beige);
+}
+
+.CovidCountryFilter > button{
+    width: 40px;
+    border: 1px solid var(--bright-beige-border-color);
+    border-left-color: transparent;
+    background-color: var(--complement-beige);
+    cursor: pointer;
+}
+
+.CovidCountryFilter > button > img{
+    height: 80%;
+    width: 80%;
+    object-fit: contain;
+}
+
+.CovidCountryFilter > button:hover{
+    background-color: var(--beige-color);
+}
+
+.CovidCountryFilter > input:focus{
+    outline: 2px solid var(--complement-blue);
+    outline-offset: -2px;
+}

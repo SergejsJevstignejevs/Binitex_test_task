@@ -1,0 +1,9 @@
+.CovidTableFilters{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 750px;
+    height: 50px;
+    margin-bottom: 5px;
+}

@@ -38,7 +38,7 @@
 
 .CovidTablePageSelectionPanel > ul > li.selected{
     background-color: var(--complement-beige);
-    outline: 2px solid var(--blue-color);
+    outline: 2px solid var(--complement-blue);
     outline-offset: -2px;
 }
 
