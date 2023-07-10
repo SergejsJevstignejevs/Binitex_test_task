@@ -186,15 +186,11 @@ export default function useCovid19Service(): Covid19Service{
     };
 
     useEffect(() => {
-        // _transformToTableData(
-        //     covid19DataByCountries,
-        //     covid19CountriesTotalCasesAndDeaths
-        // ).then((tableData) => {
-        //     dispatch(setCurrentTableFilteredData(tableData));
-        // });
+
         covid19DataByCountries.then((data) => {
             dispatch(setAPIDataByCountries(data));
         })
+        
     }, []);
 
     const getMinMaxDates = async () => {
