@@ -24,15 +24,22 @@ export const setCurrentTableFilteredData = (currentTableFilteredData: Array<Tabl
     payload: currentTableFilteredData,
 });
 
+export const setFullTableDataFilteredByDate = (fullTableDataFilteredByDate: Array<TableCovidDataRepresentation>): TableDataAction => ({
+    type: "SET_FULL_TABLE_DATA_FILTERED_BY_DATE",
+    payload: fullTableDataFilteredByDate,
+});
+
 //State definition
 export interface TableDataState {
     currentTablePageData: Array<TableCovidDataRepresentation>,
-    currentTableFilteredData: Array<TableCovidDataRepresentation>
+    currentTableFilteredData: Array<TableCovidDataRepresentation>,
+    fullTableDataFilteredByDate: Array<TableCovidDataRepresentation>
 };
 
 const initialState = {
     currentTablePageData: new Array<TableCovidDataRepresentation>(),
-    currentTableFilteredData: new Array<TableCovidDataRepresentation>()
+    currentTableFilteredData: new Array<TableCovidDataRepresentation>(),
+    fullTableDataFilteredByDate: new Array<TableCovidDataRepresentation>(),
 };
 
 export function tableDataReducer(state: TableDataState = initialState, action: TableDataAction) {
@@ -42,6 +49,9 @@ export function tableDataReducer(state: TableDataState = initialState, action: T
         }
         case "SET_CURRENT_TABLE_FILTERED_DATA":{
             return { ...state, currentTableFilteredData: [...action.payload] };
+        }
+        case "SET_FULL_TABLE_DATA_FILTERED_BY_DATE":{
+            return { ...state, fullTableDataFilteredByDate: [...action.payload] };
         }
         default:{
             return state;

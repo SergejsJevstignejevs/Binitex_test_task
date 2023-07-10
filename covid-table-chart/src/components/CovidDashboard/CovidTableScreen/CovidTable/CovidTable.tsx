@@ -9,7 +9,8 @@ import "./CovidTable.css";
 import { RootReducerState } from "../../../../redux/reducerStore";
 import { 
     TableDataState,
-    setCurrentTablePageData
+    setCurrentTablePageData,
+    setCurrentTableFilteredData
 } from "./tableDataReducer";
 import { PageSelectionState } from "../CovidTablePageSelectionPanel/pageSelectionReducer";
 import { useCovid19ServiceDI } from "../../../../contexts/Covid19ServiceProvider";
@@ -27,7 +28,8 @@ const columns = [
 const CovidTable: React.FC = () => {
     const { 
         currentTablePageData,
-        currentTableFilteredData
+        currentTableFilteredData,
+        fullTableDataFilteredByDate
     } = useSelector<RootReducerState, TableDataState>((state) => state.tableDataReducer);
     const { 
         currentPageNumber,
@@ -49,6 +51,12 @@ const CovidTable: React.FC = () => {
             amountOfDeathsPer1000: element.amountOfDeathsPer1000
         }
     });
+
+    useEffect(() => {
+
+        dispatch(setCurrentTableFilteredData(fullTableDataFilteredByDate));
+
+    }, [fullTableDataFilteredByDate]);
 
     useEffect(() => {
         
