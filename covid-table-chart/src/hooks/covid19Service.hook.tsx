@@ -19,15 +19,21 @@ export interface Covid19Service {
         currentTableData: TableCovidDataRepresentation[], 
         currentPageNumber: number, 
         pageRowCount: number) => Promise<TableCovidDataRepresentation[]>,
-    filterAPIDataByDate(
+    filterAPIDataByDate: (
         apiDataByCountries: APICountryNameCountryData,
         startDate: Date | null,
         endDate: Date | null
-    ): Promise<TableCovidDataRepresentation[]>,
-    filterBySelectedCountry(
+    ) => Promise<TableCovidDataRepresentation[]>,
+    filterBySelectedCountry: (
         currentTableData: TableCovidDataRepresentation[], 
         country: string
-    ): TableCovidDataRepresentation[]
+    ) => TableCovidDataRepresentation[],
+    filterBySelectedColumnValues: (
+        currentTableData: TableCovidDataRepresentation[], 
+        selectedColumn: string,
+        selectedColumnFromValue: string,
+        selectedColumnToValue: string
+    ) => TableCovidDataRepresentation[]
 }
 
 export interface Covid19APIData{
@@ -277,13 +283,116 @@ export default function useCovid19Service(): Covid19Service{
         return filteredByCountry;
     };
 
+    const filterBySelectedColumnValues = (
+        currentTableData: TableCovidDataRepresentation[], 
+        selectedColumn: string,
+        selectedColumnFromValue: string,
+        selectedColumnToValue: string
+    ): TableCovidDataRepresentation[] => {
+        if(
+            selectedColumn.length === 0 || 
+            selectedColumnFromValue.length === 0 ||
+            selectedColumnToValue.length === 0){
+            return currentTableData;
+        }
+
+        let filteredBySelectedColumnValues: TableCovidDataRepresentation[] = [];
+
+        if(selectedColumn === "Country"){
+            filteredBySelectedColumnValues =  currentTableData.filter((element) => {
+                return (
+                    element.country.toLowerCase().startsWith(selectedColumnFromValue.toLowerCase()) &&
+                    element.country.toLowerCase().endsWith(selectedColumnToValue.toLowerCase())
+                )
+            });
+
+            return filteredBySelectedColumnValues;
+        };
+
+        const numberFromValue = Number(selectedColumnFromValue);
+        const numberToValue = Number(selectedColumnToValue);
+
+        if(isNaN(numberFromValue) || isNaN(numberToValue)){
+            return currentTableData;
+        }
+
+        if(selectedColumn === "Amount of cases"){
+            filteredBySelectedColumnValues =  currentTableData.filter((element) => {
+                return (
+                    element.amountOfCases >= numberFromValue &&
+                    element.amountOfCases <= numberToValue
+                )
+            });
+
+            return filteredBySelectedColumnValues;
+        };
+
+        if(selectedColumn === "Amount of deaths"){
+            filteredBySelectedColumnValues =  currentTableData.filter((element) => {
+                return (
+                    element.amountOfDeaths >= numberFromValue &&
+                    element.amountOfDeaths <= numberToValue
+                )
+            });
+
+            return filteredBySelectedColumnValues;
+        };
+
+        if(selectedColumn === "Total amount of cases"){
+            filteredBySelectedColumnValues =  currentTableData.filter((element) => {
+                return (
+                    element.totalAmountOfCases >= numberFromValue &&
+                    element.totalAmountOfCases <= numberToValue
+                )
+            });
+
+            return filteredBySelectedColumnValues;
+        };
+
+        if(selectedColumn === "Total amount of deaths"){
+            filteredBySelectedColumnValues =  currentTableData.filter((element) => {
+                return (
+                    element.totalAmountOfDeaths >= numberFromValue &&
+                    element.totalAmountOfDeaths <= numberToValue
+                )
+            });
+
+            return filteredBySelectedColumnValues;
+        };
+
+        if(selectedColumn === "Amount of cases per 1000 person"){
+            filteredBySelectedColumnValues =  currentTableData.filter((element) => {
+                return (
+                    element.amountOfCasesPer1000 >= numberFromValue &&
+                    element.amountOfCasesPer1000 <= numberToValue
+                )
+            });
+
+            return filteredBySelectedColumnValues;
+        };
+
+        if(selectedColumn === "Amount of deaths per 1000 person"){
+            filteredBySelectedColumnValues =  currentTableData.filter((element) => {
+                return (
+                    element.amountOfDeathsPer1000 >= numberFromValue &&
+                    element.amountOfDeathsPer1000 <= numberToValue
+                )
+            });
+
+            return filteredBySelectedColumnValues;
+        };
+
+        return filteredBySelectedColumnValues;
+    };
+
     return { 
         process,
         setProcess,
         getMinMaxDates,
         getDataByTablePageNumber,
         filterAPIDataByDate,
-        filterBySelectedCountry
+        filterBySelectedCountry,
+        filterBySelectedColumnValues
     };
 
 }

@@ -16,7 +16,7 @@ import { PageSelectionState } from "../CovidTablePageSelectionPanel/pageSelectio
 import { SelectedFiltersState } from "../CovidTableFilters/selectedFiltersReducer";
 import { useCovid19ServiceDI } from "../../../../contexts/Covid19ServiceProvider";
 
-const columns = [
+export const columns = [
     { key: 'country', name: 'Country', minWidth: 100 },
     { key: 'amountOfCases', name: 'Amount of cases', minWidth: 100 },
     { key: 'amountOfDeaths', name: 'Amount of deaths', minWidth: 100 },
@@ -37,12 +37,16 @@ const CovidTable: React.FC = () => {
         currentPageRowCount
     } = useSelector<RootReducerState, PageSelectionState>((state) => state.pageSelectionReducer);
     const {
-        selectedCountry
+        selectedCountry,
+        selectedColumnField,
+        selectedColumnFromValue,
+        selectedColumnToValue
     } = useSelector<RootReducerState, SelectedFiltersState>((state) => state.selectedFiltersReducer);
     const dispatch = useDispatch();
     const { 
         getDataByTablePageNumber,
-        filterBySelectedCountry
+        filterBySelectedCountry,
+        filterBySelectedColumnValues
     } = useCovid19ServiceDI();
 
     const rows = currentTablePageData.map(element => {
@@ -59,14 +63,23 @@ const CovidTable: React.FC = () => {
 
     useEffect(() => {
 
-        const filteredData = filterBySelectedCountry(
-            fullTableDataFilteredByDate,
-            selectedCountry
+        const filteredData = filterBySelectedColumnValues(
+            filterBySelectedCountry(
+                fullTableDataFilteredByDate,
+                selectedCountry
+            ),
+            selectedColumnField,
+            selectedColumnFromValue,
+            selectedColumnToValue
         );
         
         dispatch(setCurrentTableFilteredData(filteredData));
         
-    }, [fullTableDataFilteredByDate, selectedCountry]);
+    }, [fullTableDataFilteredByDate, 
+        selectedCountry, 
+        selectedColumnField,
+        selectedColumnFromValue,
+        selectedColumnToValue]);
 
     useEffect(() => {
         

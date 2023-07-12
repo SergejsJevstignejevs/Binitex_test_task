@@ -1,0 +1,36 @@
+.ColumnFieldFilter{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    height: 35px;
+    width: 450px;
+}
+
+.ColumnFieldFilter > .ColumnSelection{
+    display: flex;
+    height: 35px;
+    width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border: 1px solid var(--bright-beige-border-color);
+    outline: none;
+    background-color: var(--complement-beige);
+}
+
+.ColumnFieldFilter > input{
+    box-sizing: border-box;
+    padding: 0 5px 0 5px;
+    width: 100px;
+    height: 35px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--bright-beige-border-color);
+    background-color: var(--complement-beige);
+}
+
+.ColumnFieldFilter > input:focus{
+    outline: 2px solid var(--complement-blue);
+    outline-offset: -2px;
+}
+
