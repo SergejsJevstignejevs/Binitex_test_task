@@ -3,7 +3,7 @@ interface ClearFiltersAction {
 }
 
 // Action creators
-export const resetFilters = (): ClearFiltersAction => ({
+export const toggleClearFilters = (): ClearFiltersAction => ({
     type: "RESET_FILTERS",
 });
 
