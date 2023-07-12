@@ -6,7 +6,7 @@ import { tableDataReducer } from "../components/CovidDashboard/CovidTableScreen/
 import { pageSelectionReducer } from "../components/CovidDashboard/CovidTableScreen/CovidTablePageSelectionPanel/pageSelectionReducer";
 import { apiDataByCountriesReducer } from "../hooks/apiDataByCountriesReducer";
 import { selectedFiltersReducer } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/selectedFiltersReducer";
-import { clearFiltersReducer } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/CovidCountryFilter/clearFiltersReducer";
+import { clearFiltersReducer } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/ClearFiltersButton/clearFiltersReducer";
 
 import { DateState } from "../components/DatePickerPanel/dateReducer";
 import { VisualizationChoiseState } from "../components/VisualizationSelectionPanel/dataVisualizationChoiseReducer";
@@ -14,7 +14,7 @@ import { TableDataState } from "../components/CovidDashboard/CovidTableScreen/Co
 import { PageSelectionState } from "../components/CovidDashboard/CovidTableScreen/CovidTablePageSelectionPanel/pageSelectionReducer";
 import { APIDataByCountriesState } from "../hooks/apiDataByCountriesReducer";
 import { SelectedFiltersState } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/selectedFiltersReducer";
-import { ClearFiltersState } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/CovidCountryFilter/clearFiltersReducer";
+import { ClearFiltersState } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/ClearFiltersButton/clearFiltersReducer";
 
 export interface RootReducerState {
     dateReducer: DateState,

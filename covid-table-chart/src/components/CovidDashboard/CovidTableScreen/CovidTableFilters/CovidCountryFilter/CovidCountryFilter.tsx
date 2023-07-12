@@ -4,45 +4,36 @@ import "./CovidCountryFilter.css";
 
 import {
     SelectedFiltersState,
-    setSelectedCountry,
-    setInputCountryValue
+    setSelectedCountry
 } from "../selectedFiltersReducer";
 
 import { RootReducerState } from "../../../../../redux/reducerStore";
 
 const CovidCountryFilter: React.FC = () => {
     const {
-        inputCountryValue
+        selectedCountry
     } = useSelector<RootReducerState, SelectedFiltersState>((state) => state.selectedFiltersReducer);
     const dispatch = useDispatch();
 
-    const handleInputCountryValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
-        dispatch(setInputCountryValue(event.target.value));
+        dispatch(setSelectedCountry(event.target.value));
 
-    };    
-
-    const handleBtnCountryClick = () => {
-
-        dispatch(setSelectedCountry(inputCountryValue));
-
-    };
+    }; 
 
     return (
         <div className="CovidCountryFilter">
             <input 
                 type="text"
                 placeholder="Find by country"
-                value={inputCountryValue || ""}
-                onChange={handleInputCountryValueChange}>
+                value={selectedCountry || ""}
+                onChange={handleInputChange}>
             </input>
-            <button 
-                type="button"
-                onClick={handleBtnCountryClick}>
+            <div className="ImageContainer">
                 <img 
                     src="pictures/magnifying-glass.png"
                     alt="Magnifying Glass"/>
-            </button>
+            </div>
         </div>
     );
 }

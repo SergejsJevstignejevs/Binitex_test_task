@@ -5,7 +5,7 @@ import "./ClearFiltersButton.css";
 import { resetPageSelectionReducer } from "../../CovidTablePageSelectionPanel/pageSelectionReducer";
 import { resetSelectedFiltersReducer } from "../selectedFiltersReducer";
 import { resetDateReducer } from "../../../../DatePickerPanel/dateReducer";
-import { resetFilters } from "../CovidCountryFilter/clearFiltersReducer";
+import { resetFilters } from "./clearFiltersReducer";
 
 const ClearFiltersButton: React.FC = () => {
     const dispatch = useDispatch();

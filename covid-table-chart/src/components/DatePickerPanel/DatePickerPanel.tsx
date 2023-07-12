@@ -17,7 +17,7 @@ import {
 import { setFullTableDataFilteredByDate } from "../CovidDashboard/CovidTableScreen/CovidTable/tableDataReducer";
 
 import { RootReducerState } from "../../redux/reducerStore";
-import { ClearFiltersState } from "../CovidDashboard/CovidTableScreen/CovidTableFilters/CovidCountryFilter/clearFiltersReducer";
+import { ClearFiltersState } from "../CovidDashboard/CovidTableScreen/CovidTableFilters/ClearFiltersButton/clearFiltersReducer";
 import { useCovid19ServiceDI } from "../../contexts/Covid19ServiceProvider";
 import { APIDataByCountriesState } from "../../hooks/apiDataByCountriesReducer";
 

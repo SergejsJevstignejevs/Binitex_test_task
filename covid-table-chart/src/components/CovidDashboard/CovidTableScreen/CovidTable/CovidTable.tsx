@@ -59,20 +59,13 @@ const CovidTable: React.FC = () => {
 
     useEffect(() => {
 
-        if (selectedCountry.length > 0) {
-
-            const filteredData = filterBySelectedCountry(
-                fullTableDataFilteredByDate,
-                selectedCountry
-            );
-            dispatch(setCurrentTableFilteredData(filteredData));
-
-        } else {
-
-            dispatch(setCurrentTableFilteredData(fullTableDataFilteredByDate));
-
-        }
-
+        const filteredData = filterBySelectedCountry(
+            fullTableDataFilteredByDate,
+            selectedCountry
+        );
+        
+        dispatch(setCurrentTableFilteredData(filteredData));
+        
     }, [fullTableDataFilteredByDate, selectedCountry]);
 
     useEffect(() => {
@@ -88,14 +81,16 @@ const CovidTable: React.FC = () => {
     }, [currentTableFilteredData, currentPageNumber, currentPageRowCount]);
     
     return (
-        <DataGrid
-            style={{width: '100%'}}
-            columns={columns}
-            rows={rows}
-            headerRowHeight={78}
-            rowHeight={30}
-            onCellClick={() => console.log()}
-        />
+        <>
+            <DataGrid
+                style={{width: '100%'}}
+                columns={columns}
+                rows={rows}
+                headerRowHeight={78}
+                rowHeight={30}
+            />
+            {rows.length === 0 && <p className="NothingIsFound">Nothing is found!</p>}
+        </>
     );
 }
 

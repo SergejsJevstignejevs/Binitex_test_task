@@ -14,7 +14,7 @@ import { PageSelectionState } from "./pageSelectionReducer";
 import { RootReducerState } from "../../../../redux/reducerStore";
 import { TableDataState } from "../CovidTable/tableDataReducer";
 import { VisualizationChoiseState } from "../../../VisualizationSelectionPanel/dataVisualizationChoiseReducer";
-import { ClearFiltersState } from "../CovidTableFilters/CovidCountryFilter/clearFiltersReducer";
+import { ClearFiltersState } from "../CovidTableFilters/ClearFiltersButton/clearFiltersReducer";
 
 function CovidTablePageSelectionPanel() {
     const { 

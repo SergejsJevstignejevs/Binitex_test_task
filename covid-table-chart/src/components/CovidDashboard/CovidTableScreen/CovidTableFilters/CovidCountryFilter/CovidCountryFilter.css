@@ -24,22 +24,21 @@
     background-color: var(--complement-beige);
 }
 
-.CovidCountryFilter > button{
+.CovidCountryFilter > .ImageContainer{
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 40px;
     border: 1px solid var(--bright-beige-border-color);
     border-left-color: transparent;
-    background-color: var(--complement-beige);
-    cursor: pointer;
+    background-color: var(--beige-color);
 }
 
-.CovidCountryFilter > button > img{
+.CovidCountryFilter > .ImageContainer >  img{
     height: 80%;
     width: 80%;
     object-fit: contain;
-}
-
-.CovidCountryFilter > button:hover{
-    background-color: var(--beige-color);
 }
 
 .CovidCountryFilter > input:focus{

@@ -4,11 +4,6 @@ interface SelectedFiltersAction {
 }
 
 // Action creators
-export const setInputCountryValue = (inputCountryValue: string): SelectedFiltersAction => ({
-    type: "SET_INPUT_COUNTRY_VALUE",
-    payload: inputCountryValue
-});
-
 export const setSelectedCountry = (selectedCountry: string): SelectedFiltersAction => ({
     type: "SET_SELECTED_COUNTRY",
     payload: selectedCountry
@@ -21,12 +16,10 @@ export const resetSelectedFiltersReducer = (): SelectedFiltersAction => ({
 
 //State definition
 export interface SelectedFiltersState {
-    inputCountryValue: string,
     selectedCountry: string
 };
 
 const initialState: SelectedFiltersState = {
-    inputCountryValue: "",
     selectedCountry: ""
 };
 
@@ -35,9 +28,6 @@ export function selectedFiltersReducer(
     action: SelectedFiltersAction) 
 {
     switch (action.type) {
-        case "SET_INPUT_COUNTRY_VALUE":{
-            return { ...state, inputCountryValue: action.payload };
-        }
         case "SET_SELECTED_COUNTRY":{
             return { ...state, selectedCountry: action.payload };
         }
