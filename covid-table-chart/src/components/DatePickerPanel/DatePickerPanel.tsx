@@ -11,7 +11,8 @@ import {
     setStartDate,
     setEndDate,
     setMinDate,
-    setMaxDate
+    setMaxDate,
+    setAPIDataByCountriesFilteredByDate
 } from "./dateReducer";
 
 import { setFullTableDataFilteredByDate } from "../CovidDashboard/CovidTableScreen/CovidTable/tableDataReducer";
@@ -57,10 +58,11 @@ const DatePickerPanel: React.FC = () => {
 
     useEffect(() => {
 
-        filterAPIDataByDate(apiDataByCountries, startDate, endDate)
-            .then((result) => {
-            dispatch(setFullTableDataFilteredByDate(result));
-        });
+        dispatch(
+            setAPIDataByCountriesFilteredByDate(
+                filterAPIDataByDate(apiDataByCountries, startDate, endDate)
+            )
+        );
 
     }, [startDate, endDate]);
 

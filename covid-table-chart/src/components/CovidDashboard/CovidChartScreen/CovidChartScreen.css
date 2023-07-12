@@ -1,0 +1,9 @@
+.CovidChartScreen{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 750px;
+    height: 450px;
+    background-color: var(--complement-beige);
+    border: 1px solid var(--bright-beige-border-color);
+}

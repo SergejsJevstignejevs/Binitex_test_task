@@ -7,6 +7,7 @@ import { TableCovidDataRepresentation } from "../components/CovidDashboard/Covid
 import { setAPIDataByCountries } from "./apiDataByCountriesReducer";
 import { RootReducerState } from "../redux/reducerStore";
 import { DateState } from "../components/DatePickerPanel/dateReducer";
+import { ChartCovidDataRepresentation } from "../components/CovidDashboard/CovidChartScreen/CovidChart/chartDataReducer";
 
 export interface Covid19Service {
     process: string,
@@ -23,7 +24,7 @@ export interface Covid19Service {
         apiDataByCountries: APICountryNameCountryData,
         startDate: Date | null,
         endDate: Date | null
-    ) => Promise<TableCovidDataRepresentation[]>,
+    ) => APICountryNameCountryData,
     filterBySelectedCountry: (
         currentTableData: TableCovidDataRepresentation[], 
         country: string
@@ -33,7 +34,13 @@ export interface Covid19Service {
         selectedColumn: string,
         selectedColumnFromValue: string,
         selectedColumnToValue: string
-    ) => TableCovidDataRepresentation[]
+    ) => TableCovidDataRepresentation[],
+    toChartData: (
+        apiDataByCountries: APICountryNameCountryData
+    ) => ChartCovidDataRepresentation,
+    toTableData: (
+        apiDataByCountries: APICountryNameCountryData
+    ) => Promise<TableCovidDataRepresentation[]>
 }
 
 export interface Covid19APIData{
@@ -194,6 +201,15 @@ export default function useCovid19Service(): Covid19Service{
        
     };
 
+    const toTableData = async (
+        apiDataByCountries: APICountryNameCountryData
+    ): Promise<TableCovidDataRepresentation[]> =>  {
+        return await _transformToTableData(
+            Promise.resolve(apiDataByCountries), 
+            covid19CountriesTotalCasesAndDeaths
+        );
+    }
+
     useEffect(() => {
 
         covid19DataByCountries.then((data) => {
@@ -242,11 +258,11 @@ export default function useCovid19Service(): Covid19Service{
         return currentTableFullData.slice(startIndex, endIndex);
     };
 
-    const filterAPIDataByDate = async (
+    const filterAPIDataByDate = (
         apiDataByCountries: APICountryNameCountryData,
         startDate: Date | null,
         endDate: Date | null
-      ): Promise<TableCovidDataRepresentation[]> => {
+      ): APICountryNameCountryData => {
         const filteredDataByDate: APICountryNameCountryData = {};
         
         Object.entries(apiDataByCountries).forEach(([countryName, countryData]) => {
@@ -262,10 +278,7 @@ export default function useCovid19Service(): Covid19Service{
             });
         });
 
-        return await _transformToTableData(
-            Promise.resolve(filteredDataByDate), 
-            covid19CountriesTotalCasesAndDeaths
-        );
+        return filteredDataByDate;
     };
 
     const filterBySelectedCountry = (
@@ -385,6 +398,43 @@ export default function useCovid19Service(): Covid19Service{
         return filteredBySelectedColumnValues;
     };
 
+    const toChartData = (
+        apiDataByCountries: APICountryNameCountryData,
+      ): ChartCovidDataRepresentation => {
+        const chartData: ChartCovidDataRepresentation = {};
+        let labels: string[] = [];
+
+        Object.entries(apiDataByCountries).forEach(([country, countryData]) => {
+            const countryCases = countryData.map((data) => data.cases);
+            const countryDeaths = countryData.map((data) => data.deaths);
+
+            labels = [...countryData.map((data) => data.dateRep)];
+
+            const countryDatasets = [
+                {
+                    label: country + " cases",
+                    data: countryCases,
+                    backgroundColor: "#FFD700",
+                    borderColor: "#CBA95A"
+                },
+                {
+                    label: country + " deaths",
+                    data: countryDeaths,
+                    backgroundColor: "#FF0000",
+                    borderColor: "#FF0000"
+                },
+            ];
+
+            chartData[country] = { 
+                labels: [...labels], 
+                datasets: [...countryDatasets] 
+            };
+
+        });
+
+        return chartData;
+    };
+
     return { 
         process,
         setProcess,
@@ -392,7 +442,9 @@ export default function useCovid19Service(): Covid19Service{
         getDataByTablePageNumber,
         filterAPIDataByDate,
         filterBySelectedCountry,
-        filterBySelectedColumnValues
+        filterBySelectedColumnValues,
+        toChartData,
+        toTableData
     };
 
 }

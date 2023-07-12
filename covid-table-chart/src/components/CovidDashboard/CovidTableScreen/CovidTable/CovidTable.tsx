@@ -14,6 +14,7 @@ import {
 } from "./tableDataReducer";
 import { PageSelectionState } from "../CovidTablePageSelectionPanel/pageSelectionReducer";
 import { SelectedFiltersState } from "../CovidTableFilters/selectedFiltersReducer";
+import { DateState } from "../../../DatePickerPanel/dateReducer";
 import { useCovid19ServiceDI } from "../../../../contexts/Covid19ServiceProvider";
 
 export const columns = [
@@ -29,8 +30,7 @@ export const columns = [
 const CovidTable: React.FC = () => {
     const { 
         currentTablePageData,
-        currentTableFilteredData,
-        fullTableDataFilteredByDate
+        currentTableFilteredData
     } = useSelector<RootReducerState, TableDataState>((state) => state.tableDataReducer);
     const { 
         currentPageNumber,
@@ -42,11 +42,15 @@ const CovidTable: React.FC = () => {
         selectedColumnFromValue,
         selectedColumnToValue
     } = useSelector<RootReducerState, SelectedFiltersState>((state) => state.selectedFiltersReducer);
+    const {
+        apiDataByCountriesFilteredByDate
+    } = useSelector<RootReducerState, DateState>((state) => state.dateReducer);
     const dispatch = useDispatch();
     const { 
         getDataByTablePageNumber,
         filterBySelectedCountry,
-        filterBySelectedColumnValues
+        filterBySelectedColumnValues,
+        toTableData
     } = useCovid19ServiceDI();
 
     const rows = currentTablePageData.map(element => {
@@ -63,19 +67,25 @@ const CovidTable: React.FC = () => {
 
     useEffect(() => {
 
-        const filteredData = filterBySelectedColumnValues(
-            filterBySelectedCountry(
-                fullTableDataFilteredByDate,
-                selectedCountry
-            ),
-            selectedColumnField,
-            selectedColumnFromValue,
-            selectedColumnToValue
-        );
+        const fetchData = async () => {
+            const tableData = 
+                apiDataByCountriesFilteredByDate !== null ? 
+                    await toTableData(apiDataByCountriesFilteredByDate): 
+                    await toTableData({});
+
+            const filteredData = filterBySelectedColumnValues(
+                filterBySelectedCountry(tableData, selectedCountry),
+                selectedColumnField,
+                selectedColumnFromValue,
+                selectedColumnToValue
+            );
+
+            dispatch(setCurrentTableFilteredData(filteredData));
+        };
         
-        dispatch(setCurrentTableFilteredData(filteredData));
+        fetchData();
         
-    }, [fullTableDataFilteredByDate, 
+    }, [apiDataByCountriesFilteredByDate, 
         selectedCountry, 
         selectedColumnField,
         selectedColumnFromValue,

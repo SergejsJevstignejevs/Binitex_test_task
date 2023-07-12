@@ -7,6 +7,7 @@ import { pageSelectionReducer } from "../components/CovidDashboard/CovidTableScr
 import { apiDataByCountriesReducer } from "../hooks/apiDataByCountriesReducer";
 import { selectedFiltersReducer } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/selectedFiltersReducer";
 import { clearFiltersReducer } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/ClearFiltersButton/clearFiltersReducer";
+import { chartDataReducer } from "../components/CovidDashboard/CovidChartScreen/CovidChart/chartDataReducer";
 
 import { DateState } from "../components/DatePickerPanel/dateReducer";
 import { VisualizationChoiseState } from "../components/VisualizationSelectionPanel/dataVisualizationChoiseReducer";
@@ -15,6 +16,7 @@ import { PageSelectionState } from "../components/CovidDashboard/CovidTableScree
 import { APIDataByCountriesState } from "../hooks/apiDataByCountriesReducer";
 import { SelectedFiltersState } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/selectedFiltersReducer";
 import { ClearFiltersState } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/ClearFiltersButton/clearFiltersReducer";
+import { ChartDataState } from "../components/CovidDashboard/CovidChartScreen/CovidChart/chartDataReducer";
 
 export interface RootReducerState {
     dateReducer: DateState,
@@ -23,7 +25,8 @@ export interface RootReducerState {
     pageSelectionReducer: PageSelectionState,
     apiDataByCountriesReducer: APIDataByCountriesState,
     selectedFiltersReducer: SelectedFiltersState,
-    clearFiltersReducer: ClearFiltersState
+    clearFiltersReducer: ClearFiltersState,
+    chartDataReducer: ChartDataState
 }
 
 const rootReducer = combineReducers({
@@ -33,7 +36,8 @@ const rootReducer = combineReducers({
     pageSelectionReducer,
     apiDataByCountriesReducer,
     selectedFiltersReducer,
-    clearFiltersReducer
+    clearFiltersReducer,
+    chartDataReducer
 });
 
 export const reducerStore = createStore(rootReducer);

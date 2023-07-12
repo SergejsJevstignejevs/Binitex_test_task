@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 
 import CovidTableScreen from "./CovidTableScreen/CovidTableScreen";
+import CovidChartScreen from "./CovidChartScreen/CovidChartScreen";
 
 import "./CovidDashboard.css";
 
@@ -21,7 +22,7 @@ const CovidDashboard: React.FC = () => {
                             return <CovidTableScreen />;
                         }
                         case "chart":{
-                            return null;
+                            return <CovidChartScreen/>;
                         }
                         default:
                             return null;

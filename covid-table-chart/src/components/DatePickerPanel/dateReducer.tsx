@@ -1,6 +1,8 @@
+import { APICountryNameCountryData } from "../../hooks/covid19Service.hook";
+
 interface DateAction {
     type: string,
-    payload: Date
+    payload: Date | APICountryNameCountryData
 }
 
 // Action creators
@@ -24,6 +26,11 @@ export const setMaxDate = (maxDate: Date): DateAction => ({
     payload: maxDate,
 });
 
+export const setAPIDataByCountriesFilteredByDate = (apiDataByCountriesFilteredByDate: APICountryNameCountryData): DateAction => ({
+    type: "SET_API_DATA_BY_COUNTRIES_FILTERED_BY_DATE",
+    payload: apiDataByCountriesFilteredByDate,
+});
+
 export const resetDateReducer = (): DateAction => ({
     type: "RESET_DATE_REDUCER",
     payload: new Date(),
@@ -34,14 +41,16 @@ export interface DateState {
     startDate: Date | null,
     endDate: Date | null,
     minDate: Date | null,
-    maxDate: Date | null
+    maxDate: Date | null,
+    apiDataByCountriesFilteredByDate: APICountryNameCountryData | null
 };
 
 const initialState = {
     startDate: null,
     endDate: null,
     minDate: null,
-    maxDate: null
+    maxDate: null,
+    apiDataByCountriesFilteredByDate: null
 };
 
 export function dateReducer(state: DateState = initialState, action: DateAction) {
@@ -57,6 +66,9 @@ export function dateReducer(state: DateState = initialState, action: DateAction)
         }
         case "SET_MAX_DATE":{
             return { ...state, maxDate: action.payload };
+        }
+        case "SET_API_DATA_BY_COUNTRIES_FILTERED_BY_DATE":{
+            return { ...state, apiDataByCountriesFilteredByDate: action.payload };
         }
         case "RESET_DATE_REDUCER":{
             return initialState;
