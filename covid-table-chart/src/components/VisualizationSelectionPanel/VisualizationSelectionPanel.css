@@ -47,3 +47,7 @@
 .ChoiseItem.NonSelected{
     background-color: var(--complement-blue);
 }
+
+.ChoiseItem.NonSelected:hover{
+    background-color: var(--darker-complement-blue);
+}
