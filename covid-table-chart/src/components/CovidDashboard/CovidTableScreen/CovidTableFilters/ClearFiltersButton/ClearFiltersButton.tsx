@@ -25,6 +25,7 @@ const ClearFiltersButton: React.FC = () => {
             <span>
                 Clear Filters
             </span>
+            <img src="/pictures/reset.png" alt="Reset arrow" />
         </button>
     );
 }
