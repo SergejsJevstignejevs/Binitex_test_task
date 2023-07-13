@@ -44,6 +44,11 @@ const CovidCountrySelectionFilter: React.FC = () => {
                 id="countries"
                 value={selectedChartCountry}
                 onChange={handleChartCountryChange}>
+                <option 
+                    key={"All Countries"}
+                    value={"All Countries"}>
+                    All Countries
+                </option>
                 {selectOptions}
             </select>
         </div>

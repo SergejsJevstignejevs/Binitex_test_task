@@ -40,7 +40,10 @@ export interface Covid19Service {
     ) => ChartCovidDataRepresentation,
     toTableData: (
         apiDataByCountries: APICountryNameCountryData
-    ) => Promise<TableCovidDataRepresentation[]>
+    ) => Promise<TableCovidDataRepresentation[]>,
+    chartAllCountriesData: (
+        apiDataByCountries: APICountryNameCountryData,
+    ) => ChartCovidDataRepresentation
 }
 
 export interface Covid19APIData{
@@ -433,6 +436,68 @@ export default function useCovid19Service(): Covid19Service{
         return chartData;
     };
 
+    const chartAllCountriesData = (
+        apiDataByCountries: APICountryNameCountryData,
+    ): ChartCovidDataRepresentation => {
+        const chartAllCountriesData: ChartCovidDataRepresentation = {};
+
+        const allCountriesData: {
+            labels: string[];
+            datasets: {
+                label: string;
+                data: number[];
+                backgroundColor: string;
+                borderColor: string;
+            }[];
+        } = { 
+            labels: [], 
+            datasets: [
+                {
+                    label: "All countries cases",
+                    data: Array.from({ length: 0 }, () => 0),
+                    backgroundColor: "#FFD700", // golden
+                    borderColor: "#DDBB00" // darker golden
+                },
+                {
+                    label: "All countries deaths",
+                    data: Array.from({ length: 0 }, () => 0),
+                    backgroundColor: "#DD1111", // red
+                    borderColor: "#FF5C5C" // lightter red
+                }
+            ] 
+        };
+        
+        Object.entries(apiDataByCountries).forEach(([country, countryData]) => {
+
+            countryData.forEach((item) => {
+                const { dateRep } = item;
+
+                if(!allCountriesData.labels.includes(dateRep)){
+                    allCountriesData.labels.push(dateRep);
+                }
+
+                const indexOfDateRep = allCountriesData.labels.findIndex((label) => label === dateRep);
+
+                //cases dataset
+                if (allCountriesData.datasets[0].data[indexOfDateRep] === undefined) {
+                    allCountriesData.datasets[0].data[indexOfDateRep] = 0;
+                }
+                allCountriesData.datasets[0].data[indexOfDateRep] += item.cases;
+        
+                // deaths dataset
+                if (allCountriesData.datasets[1].data[indexOfDateRep] === undefined) {
+                    allCountriesData.datasets[1].data[indexOfDateRep] = 0;
+                }
+                allCountriesData.datasets[1].data[indexOfDateRep] += item.deaths;
+            })
+
+        });
+    
+        chartAllCountriesData['All Countries'] = allCountriesData;
+    
+        return chartAllCountriesData;
+    };
+
     return { 
         process,
         setProcess,
@@ -442,7 +507,8 @@ export default function useCovid19Service(): Covid19Service{
         filterBySelectedCountry,
         filterBySelectedColumnValues,
         toChartData,
-        toTableData
+        toTableData,
+        chartAllCountriesData
     };
 
 }

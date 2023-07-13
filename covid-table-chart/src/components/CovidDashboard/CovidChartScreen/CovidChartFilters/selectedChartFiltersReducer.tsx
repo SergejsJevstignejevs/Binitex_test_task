@@ -20,7 +20,7 @@ export interface SelectedChartFiltersState {
 };
 
 const initialState: SelectedChartFiltersState = {
-    selectedChartCountry: "Afghanistan"
+    selectedChartCountry: "All Countries"
 };
 
 export function selectedChartFiltersReducer(

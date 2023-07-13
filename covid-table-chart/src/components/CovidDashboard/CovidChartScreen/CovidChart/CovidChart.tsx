@@ -27,7 +27,8 @@ const CovidChart: React.FC = () => {
     } = useSelector<RootReducerState, SelectedChartFiltersState>((state) => state.selectedChartFiltersReducer);
     const dispatch = useDispatch();
     const {
-        toChartData
+        toChartData,
+        chartAllCountriesData
     } = useCovid19ServiceDI();
 
     useEffect(() => {
@@ -37,9 +38,18 @@ const CovidChart: React.FC = () => {
         };
         
         if (apiDataByCountriesFilteredByDate !== null) {
-            dispatch(
-                setCurrentChartFilteredData(filteredChartData)
-            );
+            
+            if(selectedChartCountry === "All Countries"){
+                dispatch(
+                    setCurrentChartFilteredData(chartAllCountriesData(apiDataByCountriesFilteredByDate))
+                );
+            }
+            else{
+                dispatch(
+                    setCurrentChartFilteredData(filteredChartData)
+                );
+            }
+            
         }
 
     }, [apiDataByCountriesFilteredByDate, selectedChartCountry])
