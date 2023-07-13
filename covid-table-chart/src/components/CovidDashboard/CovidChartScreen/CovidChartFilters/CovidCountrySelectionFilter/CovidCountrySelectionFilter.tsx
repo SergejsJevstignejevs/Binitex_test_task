@@ -24,7 +24,7 @@ const CovidCountrySelectionFilter: React.FC = () => {
         return (
             <option 
                 key={countryStringReplaced}
-                value={countryStringReplaced}>
+                value={country}>
                 {countryStringReplaced}
             </option>
         )

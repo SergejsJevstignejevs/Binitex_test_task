@@ -413,13 +413,13 @@ export default function useCovid19Service(): Covid19Service{
 
             const countryDatasets = [
                 {
-                    label: country + " cases",
+                    label: country.replace(/_/g, " ") + " cases",
                     data: countryCases,
                     backgroundColor: "#FFD700", // golden
                     borderColor: "#DDBB00" // darker golden
                 },
                 {
-                    label: country + " deaths",
+                    label: country.replace(/_/g, " ") + " deaths",
                     data: countryDeaths,
                     backgroundColor: "#DD1111", // red
                     borderColor: "#FF5C5C" // lightter red

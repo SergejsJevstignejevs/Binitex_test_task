@@ -45,11 +45,12 @@ const CovidChart: React.FC = () => {
                 );
             }
             else{
+                console.log(toChartData(apiDataByCountriesFilteredByDate || {}));
                 dispatch(
                     setCurrentChartFilteredData(filteredChartData)
                 );
             }
-            
+
         }
 
     }, [apiDataByCountriesFilteredByDate, selectedChartCountry])
