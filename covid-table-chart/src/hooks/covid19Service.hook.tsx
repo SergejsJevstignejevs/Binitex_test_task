@@ -420,7 +420,7 @@ export default function useCovid19Service(): Covid19Service{
                 {
                     label: country + " deaths",
                     data: countryDeaths,
-                    backgroundColor: "#FF1111", // red
+                    backgroundColor: "#DD1111", // red
                     borderColor: "#FF5C5C" // lightter red
                 },
             ];
