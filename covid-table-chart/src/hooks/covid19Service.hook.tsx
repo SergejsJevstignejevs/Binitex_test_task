@@ -402,13 +402,11 @@ export default function useCovid19Service(): Covid19Service{
         apiDataByCountries: APICountryNameCountryData,
       ): ChartCovidDataRepresentation => {
         const chartData: ChartCovidDataRepresentation = {};
-        let labels: string[] = [];
 
         Object.entries(apiDataByCountries).forEach(([country, countryData]) => {
             const countryCases = countryData.map((data) => data.cases);
             const countryDeaths = countryData.map((data) => data.deaths);
-
-            labels = [...countryData.map((data) => data.dateRep)];
+            const labels: string[] = [...countryData.map((data) => data.dateRep)];
 
             const countryDatasets = [
                 {
