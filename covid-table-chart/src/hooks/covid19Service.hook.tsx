@@ -414,14 +414,14 @@ export default function useCovid19Service(): Covid19Service{
                 {
                     label: country + " cases",
                     data: countryCases,
-                    backgroundColor: "#FFD700",
-                    borderColor: "#CBA95A"
+                    backgroundColor: "#FFD700", // golden
+                    borderColor: "#DDBB00" // darker golden
                 },
                 {
                     label: country + " deaths",
                     data: countryDeaths,
-                    backgroundColor: "#FF0000",
-                    borderColor: "#FF0000"
+                    backgroundColor: "#FF1111", // red
+                    borderColor: "#FF5C5C" // lightter red
                 },
             ];
 
