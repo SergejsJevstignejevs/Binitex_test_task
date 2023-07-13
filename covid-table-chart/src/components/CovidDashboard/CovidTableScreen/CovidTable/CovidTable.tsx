@@ -13,7 +13,7 @@ import {
     setCurrentTableFilteredData
 } from "./tableDataReducer";
 import { PageSelectionState } from "../CovidTablePageSelectionPanel/pageSelectionReducer";
-import { SelectedFiltersState } from "../CovidTableFilters/selectedFiltersReducer";
+import { SelectedTableFiltersState } from "../CovidTableFilters/selectedTableFiltersReducer";
 import { DateState } from "../../../DatePickerPanel/dateReducer";
 import { useCovid19ServiceDI } from "../../../../contexts/Covid19ServiceProvider";
 
@@ -37,11 +37,11 @@ const CovidTable: React.FC = () => {
         currentPageRowCount
     } = useSelector<RootReducerState, PageSelectionState>((state) => state.pageSelectionReducer);
     const {
-        selectedCountry,
-        selectedColumnField,
-        selectedColumnFromValue,
-        selectedColumnToValue
-    } = useSelector<RootReducerState, SelectedFiltersState>((state) => state.selectedFiltersReducer);
+        selectedTableCountry,
+        selectedTableColumnField,
+        selectedTableColumnFromValue,
+        selectedTableColumnToValue
+    } = useSelector<RootReducerState, SelectedTableFiltersState>((state) => state.selectedTableFiltersReducer);
     const {
         apiDataByCountriesFilteredByDate
     } = useSelector<RootReducerState, DateState>((state) => state.dateReducer);
@@ -74,10 +74,10 @@ const CovidTable: React.FC = () => {
                     await toTableData({});
 
             const filteredData = filterBySelectedColumnValues(
-                filterBySelectedCountry(tableData, selectedCountry),
-                selectedColumnField,
-                selectedColumnFromValue,
-                selectedColumnToValue
+                filterBySelectedCountry(tableData, selectedTableCountry),
+                selectedTableColumnField,
+                selectedTableColumnFromValue,
+                selectedTableColumnToValue
             );
 
             dispatch(setCurrentTableFilteredData(filteredData));
@@ -86,10 +86,10 @@ const CovidTable: React.FC = () => {
         fetchData();
         
     }, [apiDataByCountriesFilteredByDate, 
-        selectedCountry, 
-        selectedColumnField,
-        selectedColumnFromValue,
-        selectedColumnToValue]);
+        selectedTableCountry, 
+        selectedTableColumnField,
+        selectedTableColumnFromValue,
+        selectedTableColumnToValue]);
 
     useEffect(() => {
         

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import "./ClearFiltersButton.css";
 
 import { resetPageSelectionReducer } from "../../CovidTablePageSelectionPanel/pageSelectionReducer";
-import { resetSelectedFiltersReducer } from "../selectedFiltersReducer";
+import { resetSelectedFiltersReducer } from "../selectedTableFiltersReducer";
 import { resetDateReducer } from "../../../../DatePickerPanel/dateReducer";
 import { toggleClearFilters } from "./clearFiltersReducer";
 

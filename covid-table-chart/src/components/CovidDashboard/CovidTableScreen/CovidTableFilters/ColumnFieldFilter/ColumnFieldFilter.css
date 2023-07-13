@@ -29,7 +29,8 @@
     background-color: var(--complement-beige);
 }
 
-.ColumnFieldFilter > input:focus{
+.ColumnFieldFilter > input:focus,
+.ColumnFieldFilter > select:focus{
     outline: 2px solid var(--complement-blue);
     outline-offset: -2px;
 }

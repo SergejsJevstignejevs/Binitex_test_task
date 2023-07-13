@@ -5,18 +5,20 @@ import { dataVisualizationChoiseReducer } from "../components/VisualizationSelec
 import { tableDataReducer } from "../components/CovidDashboard/CovidTableScreen/CovidTable/tableDataReducer";
 import { pageSelectionReducer } from "../components/CovidDashboard/CovidTableScreen/CovidTablePageSelectionPanel/pageSelectionReducer";
 import { apiDataByCountriesReducer } from "../hooks/apiDataByCountriesReducer";
-import { selectedFiltersReducer } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/selectedFiltersReducer";
+import { selectedTableFiltersReducer } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/selectedTableFiltersReducer";
 import { clearFiltersReducer } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/ClearFiltersButton/clearFiltersReducer";
 import { chartDataReducer } from "../components/CovidDashboard/CovidChartScreen/CovidChart/chartDataReducer";
+import { selectedChartFiltersReducer } from "../components/CovidDashboard/CovidChartScreen/CovidChartFilters/selectedChartFiltersReducer";
 
 import { DateState } from "../components/DatePickerPanel/dateReducer";
 import { VisualizationChoiseState } from "../components/VisualizationSelectionPanel/dataVisualizationChoiseReducer";
 import { TableDataState } from "../components/CovidDashboard/CovidTableScreen/CovidTable/tableDataReducer";
 import { PageSelectionState } from "../components/CovidDashboard/CovidTableScreen/CovidTablePageSelectionPanel/pageSelectionReducer";
 import { APIDataByCountriesState } from "../hooks/apiDataByCountriesReducer";
-import { SelectedFiltersState } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/selectedFiltersReducer";
+import { SelectedTableFiltersState } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/selectedTableFiltersReducer";
 import { ClearFiltersState } from "../components/CovidDashboard/CovidTableScreen/CovidTableFilters/ClearFiltersButton/clearFiltersReducer";
 import { ChartDataState } from "../components/CovidDashboard/CovidChartScreen/CovidChart/chartDataReducer";
+import { SelectedChartFiltersState } from "../components/CovidDashboard/CovidChartScreen/CovidChartFilters/selectedChartFiltersReducer";
 
 export interface RootReducerState {
     dateReducer: DateState,
@@ -24,9 +26,10 @@ export interface RootReducerState {
     tableDataReducer: TableDataState,
     pageSelectionReducer: PageSelectionState,
     apiDataByCountriesReducer: APIDataByCountriesState,
-    selectedFiltersReducer: SelectedFiltersState,
+    selectedTableFiltersReducer: SelectedTableFiltersState,
     clearFiltersReducer: ClearFiltersState,
     chartDataReducer: ChartDataState
+    selectedChartFiltersReducer: SelectedChartFiltersState
 }
 
 const rootReducer = combineReducers({
@@ -35,9 +38,10 @@ const rootReducer = combineReducers({
     tableDataReducer,
     pageSelectionReducer,
     apiDataByCountriesReducer,
-    selectedFiltersReducer,
+    selectedTableFiltersReducer,
     clearFiltersReducer,
-    chartDataReducer
+    chartDataReducer,
+    selectedChartFiltersReducer
 });
 
 export const reducerStore = createStore(rootReducer);

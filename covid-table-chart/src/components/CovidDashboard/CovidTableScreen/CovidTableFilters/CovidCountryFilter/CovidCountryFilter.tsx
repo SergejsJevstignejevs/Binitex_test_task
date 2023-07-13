@@ -3,21 +3,21 @@ import { useSelector, useDispatch } from "react-redux";
 import "./CovidCountryFilter.css";
 
 import {
-    SelectedFiltersState,
-    setSelectedCountry
-} from "../selectedFiltersReducer";
+    SelectedTableFiltersState,
+    setSelectedTableCountry
+} from "../selectedTableFiltersReducer";
 
 import { RootReducerState } from "../../../../../redux/reducerStore";
 
 const CovidCountryFilter: React.FC = () => {
     const {
-        selectedCountry
-    } = useSelector<RootReducerState, SelectedFiltersState>((state) => state.selectedFiltersReducer);
+        selectedTableCountry
+    } = useSelector<RootReducerState, SelectedTableFiltersState>((state) => state.selectedTableFiltersReducer);
     const dispatch = useDispatch();
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
-        dispatch(setSelectedCountry(event.target.value));
+        dispatch(setSelectedTableCountry(event.target.value));
 
     }; 
 
@@ -26,7 +26,7 @@ const CovidCountryFilter: React.FC = () => {
             <input 
                 type="text"
                 placeholder="Find by country"
-                value={selectedCountry || ""}
+                value={selectedTableCountry || ""}
                 onChange={handleInputChange}>
             </input>
             <div className="ImageContainer">

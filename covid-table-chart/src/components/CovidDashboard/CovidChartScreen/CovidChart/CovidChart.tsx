@@ -9,9 +9,11 @@ import { RootReducerState } from "../../../../redux/reducerStore";
 import { DateState } from "../../../DatePickerPanel/dateReducer";
 import { useCovid19ServiceDI } from "../../../../contexts/Covid19ServiceProvider";
 import { 
+    ChartCovidDataRepresentation,
     ChartDataState, 
     setCurrentChartFilteredData 
 } from "./chartDataReducer";
+import { SelectedChartFiltersState } from "../CovidChartFilters/selectedChartFiltersReducer";
 
 const CovidChart: React.FC = () => {
     const {
@@ -20,22 +22,35 @@ const CovidChart: React.FC = () => {
     const {
         currentChartFilteredData
     } = useSelector<RootReducerState, ChartDataState>((state) => state.chartDataReducer);
+    const {
+        selectedChartCountry
+    } = useSelector<RootReducerState, SelectedChartFiltersState>((state) => state.selectedChartFiltersReducer);
     const dispatch = useDispatch();
     const {
         toChartData
     } = useCovid19ServiceDI();
 
     useEffect(() => {
-
-        if (apiDataByCountriesFilteredByDate !== null) {
-            dispatch(setCurrentChartFilteredData(toChartData(apiDataByCountriesFilteredByDate)));
-        }
+        const filteredChartData: ChartCovidDataRepresentation = {
+            [selectedChartCountry]: 
+                toChartData(apiDataByCountriesFilteredByDate || {})[selectedChartCountry]
+        };
         
-    }, [apiDataByCountriesFilteredByDate])
+        if (apiDataByCountriesFilteredByDate !== null) {
+            dispatch(
+                setCurrentChartFilteredData(filteredChartData)
+            );
+        }
+
+    }, [apiDataByCountriesFilteredByDate, selectedChartCountry])
 
     return (
         <div className="CovidChart">
-            <Line data={currentChartFilteredData?.France || { labels: [], datasets: [] }}/>
+            <Line 
+                data={
+                    currentChartFilteredData ? 
+                    currentChartFilteredData[selectedChartCountry] || { labels: [], datasets: [] } : 
+                    { labels: [], datasets: [] }}/>
         </div>
     );
 }

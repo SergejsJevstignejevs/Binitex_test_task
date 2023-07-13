@@ -1,0 +1,39 @@
+.CovidCountrySelectionFilter{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+    width: 300px;
+}
+
+.CovidCountrySelectionFilter > label, 
+.CovidCountrySelectionFilter > select{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    height: 35px;
+} 
+
+.CovidCountrySelectionFilter > label{
+    margin-right: 5px;
+    font-weight: bold;
+    height: 35px;
+    width: 75px;
+}
+
+.CovidCountrySelectionFilter > select{
+    padding: 0 5px 0 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 200px;
+    background-color: var(--complement-beige);
+    border: 1px solid var(--bright-beige-border-color);
+    text-align-last: center;
+} 
+
+.CovidCountrySelectionFilter > select:focus{
+    outline: 2px solid var(--complement-blue);
+    outline-offset: -2px;
+}

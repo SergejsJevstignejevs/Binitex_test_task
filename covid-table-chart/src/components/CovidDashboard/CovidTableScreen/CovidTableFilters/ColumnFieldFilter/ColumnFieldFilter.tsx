@@ -4,37 +4,37 @@ import "./ColumnFieldFilter.css";
 
 import { RootReducerState } from "../../../../../redux/reducerStore";
 import { 
-    SelectedFiltersState,
-    setSelectedColumnField,
-    setColumnFromValue,
-    setColumnToValue
-} from "../selectedFiltersReducer";
+    SelectedTableFiltersState,
+    setSelectedTableColumnField,
+    setSelectedTableColumnFromValue,
+    setSelectedTableColumnToValue
+} from "../selectedTableFiltersReducer";
 
 import { columns } from "../../CovidTable/CovidTable";
 
 const ColumnFieldFilter: React.FC = () => {
     const {
-        selectedColumnField,
-        selectedColumnFromValue,
-        selectedColumnToValue
-    } = useSelector<RootReducerState,SelectedFiltersState>((state) => state.selectedFiltersReducer);
+        selectedTableColumnField,
+        selectedTableColumnFromValue,
+        selectedTableColumnToValue
+    } = useSelector<RootReducerState, SelectedTableFiltersState>((state) => state.selectedTableFiltersReducer);
     const dispatch = useDispatch();
 
     const handleSelectedColumnChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         
-        dispatch(setSelectedColumnField(event.target.value));
+        dispatch(setSelectedTableColumnField(event.target.value));
 
     }
 
     const handleSelectedColumnFromValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     
-        dispatch(setColumnFromValue(event.target.value));
+        dispatch(setSelectedTableColumnFromValue(event.target.value));
 
     }
 
     const handleSelectedColumnToValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
-        dispatch(setColumnToValue(event.target.value));
+        dispatch(setSelectedTableColumnToValue(event.target.value));
 
     }
 
@@ -44,7 +44,7 @@ const ColumnFieldFilter: React.FC = () => {
                 className="ColumnSelection"
                 name="columns" 
                 id="columns"
-                value={selectedColumnField} 
+                value={selectedTableColumnField} 
                 onChange={handleSelectedColumnChange}>
                 <option value="" disabled hidden>
                     Filter by field
@@ -62,12 +62,12 @@ const ColumnFieldFilter: React.FC = () => {
             <input 
                 placeholder="Value `from`"
                 type="text"
-                value={selectedColumnFromValue || ""}
+                value={selectedTableColumnFromValue || ""}
                 onChange={handleSelectedColumnFromValueChange}/>
             <input 
                 placeholder="Value `to`"
                 type="text"
-                value={selectedColumnToValue || ""}
+                value={selectedTableColumnToValue || ""}
                 onChange={handleSelectedColumnToValueChange}/>
         </div>
     );
