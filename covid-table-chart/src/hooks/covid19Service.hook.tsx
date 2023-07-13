@@ -5,8 +5,6 @@ import useHttp from "./http.hook";
 
 import { TableCovidDataRepresentation } from "../components/CovidDashboard/CovidTableScreen/CovidTable/tableDataReducer";
 import { setAPIDataByCountries } from "./apiDataByCountriesReducer";
-import { RootReducerState } from "../redux/reducerStore";
-import { DateState } from "../components/DatePickerPanel/dateReducer";
 import { ChartCovidDataRepresentation } from "../components/CovidDashboard/CovidChartScreen/CovidChart/chartDataReducer";
 
 export interface Covid19Service {
@@ -68,10 +66,6 @@ export interface APICountryNameCountryData{
 export default function useCovid19Service(): Covid19Service{
 
     const { request, process, setProcess } = useHttp();
-    const {
-        startDate,
-        endDate
-    } = useSelector<RootReducerState, DateState>((state) => state.dateReducer);
     const dispatch = useDispatch();
 
     const _apiBase = "https://opendata.ecdc.europa.eu/covid19/casedistribution/json/";
