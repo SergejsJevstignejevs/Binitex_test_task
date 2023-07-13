@@ -61,7 +61,14 @@ const CovidChart: React.FC = () => {
                 data={
                     currentChartFilteredData ? 
                     currentChartFilteredData[selectedChartCountry] || { labels: [], datasets: [] } : 
-                    { labels: [], datasets: [] }}/>
+                    { labels: [], datasets: [] }}
+                options = {{
+                    scales: {
+                        x: {
+                            reverse: true
+                        }
+                    }
+                }}/>
         </div>
     );
 }
